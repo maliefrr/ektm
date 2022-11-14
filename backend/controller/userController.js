@@ -1,15 +1,32 @@
 const userModel = require("../models/userModel.js")
 const jwt = require("jsonwebtoken")
+const asyncHandler = require("express-async-handler")
 const bcrypt = require("bcryptjs")
 
-const getAllUser = (req,res) => {
-    res.status(200).json({
-        statusCode: 200,
-        message: "Succes"
+const getAllUser = asyncHandler( async (req,res) => {
+    const authorizeUser = req.user.id;
+    const user = await userModel.findById(authorizeUser)
+    const data = await userModel.find()
+    if(authorizeUser && user.role === "admin") {
+        res.status(200).json({
+            statusCode: 200,
+            message: "Succes",
+            data: data.map(user => {
+                return {
+                    username : user.username,
+                    email: user.email,
+                    role: user.role
+                }
+            })
+        })
+    }
+    res.status(401).json({
+        statusCode: 401,
+        message: "User not authorized"
     })
-}
+})
 
-const register = async (req,res) => {
+const register = asyncHandler( async (req,res) => {
     const {name,username,email,password,role} = req.body;
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password,salt)
@@ -43,7 +60,36 @@ const register = async (req,res) => {
             })
         }
     }
-}
+})
+
+const login = asyncHandler( async (req,res) => {
+    const {username,password} = req.body;
+    if(!username || !password){
+        res.status(400).json({
+            statusCode: 400,
+            message: "The field cannot be blank"
+        })
+    }
+    const user = await userModel.findOne({username})
+    const checkPassword = await bcrypt.compare(password,user.password)
+    if(!user || !checkPassword){
+        res.status(401).json({
+            statusCode: 401,
+            message: "The user or password you input are invalid"
+        })
+    } else {
+        res.status(200).json({
+            statusCode: 200,
+            message: "Success",
+            data: {
+                username: user.username,
+                email: user.email,
+                token: getToken(user.id)
+            }
+        })
+        }
+    }
+)
 
 const getToken = (id) => {
     return jwt.sign({id},process.env.SECRET,{
@@ -52,5 +98,5 @@ const getToken = (id) => {
 }
 
 module.exports = {
-    getAllUser,register
+    getAllUser,register,login
 }

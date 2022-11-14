@@ -1,8 +1,10 @@
-const { getAllUser, register } = require("../controller/userController")
+const { getAllUser, register, login } = require("../controller/userController")
 const router = require("express").Router()
+const protect = require("../middleware/authHandler.js")
 
 
-router.get("/",getAllUser)
+router.get("/all",protect,getAllUser)
+router.post("/login",login)
 router.post("/register", register)
 
 module.exports = router
