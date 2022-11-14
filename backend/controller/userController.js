@@ -38,7 +38,6 @@ const register = asyncHandler( async (req,res) => {
         })
     } else {
         const user = await userModel.findOne({username});
-    
         if(user){
             res.status(400).json({
                 statusCode:400,
