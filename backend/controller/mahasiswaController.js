@@ -11,7 +11,7 @@ const addMahasiswa = asyncHandler( async (req,res) => {
     const salt = await bcrypt.genSalt(10);
     const authorizeUser = await userModel.findById(role)
     const filePath = req.file.path;
-    console.log(filePath)
+    
     if(!name || !prodi || !nim || !alamat) {
         res.status(400).json({
             statusCode: 400,
@@ -24,8 +24,9 @@ const addMahasiswa = asyncHandler( async (req,res) => {
             message: "User not authorized"
         })
     } else {
+        const imageUpload = await uploader(process.env.IMG_API, filePath)
         const data = await mahasiswaModel.create({
-            name,prodi,alamat,pas_foto : filePath, nim,
+            name,prodi,alamat,pas_foto : imageUpload.image.url, nim,
             gol_darah : gol_darah ? gol_darah : "-",
             jenis_kelamin: jenis_kelamin ? jenis_kelamin : "-"
         })
