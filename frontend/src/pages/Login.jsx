@@ -30,7 +30,7 @@ const Login = () => {
                                 <div className="text-right">
                                     <div className="inline-block mt-5 text-blue-700 cursor-pointer hover:text-blue-900 hover:underline" id="forgot-password">Lupa Password?</div>
                                 </div>
-                                <Button text="Masuk"/>
+                                <Button text="Masuk" type="submit"/>
                                 <p class="mt-5 text-center">Belum punya akun?<Link to="/register" class="text-blue-700 hover:text-blue-900 hover:underline">Daftar Sekarang</Link></p>
                             </form>
                         </div>
