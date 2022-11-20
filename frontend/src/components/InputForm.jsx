@@ -3,6 +3,7 @@ import React from 'react'
 const InputForm = (props) => {
     return (
     <>
+    <div className={props.class}>
         <label htmlFor={props.id} className="sm:mb-8">
             <div className="text-slate-800 mb-2">{props.label}</div>
             <input
@@ -13,6 +14,7 @@ const InputForm = (props) => {
                 name={props.name}
             />
         </label> 
+    </div>
     </>
     )
 }

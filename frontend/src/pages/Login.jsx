@@ -2,11 +2,12 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import InputForm from '../components/InputForm'
 import logo from "../assets/logo-uho.png"
+import Button from '../components/Button'
 
 const Login = () => {
     return (
         <>
-        <div className='font-arima bg-gradient-to-r from-sky-500 to-gray-400 overflow-y-hidden'>
+        <div className='font-arima bg-gradient-to-r from-sky-500 to-gray-400 md:overflow-y-hidden h-screen'>
             <main className='max-w-screen-2xl flex items-center h-auto md:h-screen mx-auto'>
                 <div className="h-full w-3/4 bg-sky-200/30 hidden bg-cover bg-center lg:flex">
                     <div className="m-auto">
@@ -29,7 +30,7 @@ const Login = () => {
                                 <div className="text-right">
                                     <div className="inline-block mt-5 text-blue-700 cursor-pointer hover:text-blue-900 hover:underline" id="forgot-password">Lupa Password?</div>
                                 </div>
-                                <button className="mx-auto block mt-5 bg-orange-500 px-4 py-1 rounded-md text-white hover:bg-orange-600 active:bg-orange-700 sm:mt-10">Masuk</button>
+                                <Button text="Masuk"/>
                                 <p class="mt-5 text-center">Belum punya akun?<Link to="/register" class="text-blue-700 hover:text-blue-900 hover:underline">Daftar Sekarang</Link></p>
                             </form>
                         </div>
