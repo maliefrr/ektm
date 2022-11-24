@@ -71,12 +71,7 @@ const login = asyncHandler( async (req,res) => {
     }
     const user = await userModel.findOne({username})
     const checkPassword = await bcrypt.compare(password,user.password)
-    if(!user || !checkPassword){
-        res.status(401).json({
-            statusCode: 401,
-            message: "The user or password you input are invalid"
-        })
-    } else {
+    if(user && checkPassword){
         res.status(200).json({
             statusCode: 200,
             message: "Success",
@@ -85,6 +80,11 @@ const login = asyncHandler( async (req,res) => {
                 email: user.email,
                 token: getToken(user.id)
             }
+        })
+    } else {
+        res.status(401).json({
+            statusCode: 401,
+            message: "The user or password you input are invalid"
         })
         }
     }

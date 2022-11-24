@@ -12,6 +12,8 @@ const InputForm = (props) => {
                 placeholder={props.placeholder}
                 id={props.id}
                 name={props.name}
+                value={props.value}
+                onChange={props.onChange}
             />
         </label> 
     </div>

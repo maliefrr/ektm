@@ -21,11 +21,11 @@ const Register = () => {
                     <h3 className="text-center font-semibold text-slate-600 mb-3 lg:text-2xl"><i className="bx bxs-user-plus lg:text-4xl"></i> Daftar</h3>
                     <hr className="mb-3 mx-16 lg:mb-11" />
                     <form>
-                    <InputForm id='Nama' type='text' name='nama' placeholder="Nama" label="Nama" class="mb-2"/>
-                    <InputForm id='Username' type='text' name='username' placeholder="Username" label="Username" class="mb-2"/>
-                    <InputForm id='email' type='email' name='email' placeholder="Email" label="Email" class="mb-2"/>
-                    <InputForm id='password' type='password' name='password' placeholder="Password" label="Password" class="mb-2"/>
-                    <InputForm id='passwordConfirmation' type='password' name='passwordConfirmation' placeholder="Confirmation Password" label="Password Confirmation" class="mb-2"/>
+                    <InputForm id='Nama' type='text' name='nama' placeholder="Nama" label="Nama"/>
+                    <InputForm id='Username' type='text' name='username' placeholder="Username" label="Username"/>
+                    <InputForm id='email' type='email' name='email' placeholder="Email" label="Email"/>
+                    <InputForm id='password' type='password' name='password' placeholder="Password" label="Password"/>
+                    <InputForm id='passwordConfirmation' type='password' name='passwordConfirmation' placeholder="Confirmation Password" label="Password Confirmation"/>
                     <Button text="Daftar" type="Submit"/>
                     <p className="mt-5 text-center">Sudah punya akun? <a href="/login" className="text-blue-700 hover:text-blue-900 hover:underline">Masuk</a></p>
                     </form>

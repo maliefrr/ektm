@@ -3,8 +3,68 @@ import { Link } from 'react-router-dom'
 import InputForm from '../components/InputForm'
 import logo from "../assets/logo-uho.png"
 import Button from '../components/Button'
+import {useDispatch, useSelector} from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { toast } from "react-toastify"
+import { reset, login } from '../features/auth/authSlice'
+import { RotatingLines } from  'react-loader-spinner'
+import { useEffect, useState } from 'react'
 
 const Login = () => {
+    const [formData, setFormData] = useState({
+        username: "",
+        password: ""
+    })
+
+    const {username,password} = formData;
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const {user,isLoading,isSuccess,isError,message} = useSelector((state) => state.auth)
+
+    useEffect(() => {
+        if(isError) {
+            toast.error(message)
+        }
+        if(isSuccess || user) {
+            navigate("/dashboard")
+        }
+
+        dispatch(reset())
+    },[isSuccess,isError,user,dispatch,navigate,message])
+
+    const onChange = (e) => {
+        setFormData((prev) => ({
+            ...prev,
+            [e.target.name] : e.target.value
+        }))
+    }
+
+    if(isLoading){
+        return <RotatingLines
+        strokeColor="grey"
+        strokeWidth="5"
+        animationDuration="0.75"
+        width="96"
+        visible={true}
+/>
+    }
+    
+    const onSubmit = (e) => {
+        e.preventDefault()
+        const userData = {
+            username,password
+        }
+
+        dispatch(login(userData))
+
+        setFormData({
+            username: "",
+            password: ""
+        })
+    }
+
     return (
         <>
         <div className='font-arima bg-gradient-to-r from-sky-500 to-gray-400 md:overflow-y-hidden h-screen'>
@@ -24,14 +84,14 @@ const Login = () => {
                         <div className='m-auto'>
                             <h3 className="text-center font-semibold text-slate-600 mb-3"><i className="bx bxs-user text-lg"></i> Masuk</h3>
                             <hr className="mb-3 mx-16 lg:mb-11" />
-                            <form action="">
-                                <InputForm id='Username' type='text' name='username' placeholder="Username" label="Username"/>
-                                <InputForm id='Password' type='password' name='password' placeholder="Password" label="Password"/>
+                            <form action="" onSubmit={onSubmit}>
+                                <InputForm id='Username' type='text' name='username' placeholder="Username" label="Username" value={username} onChange={onChange}/>
+                                <InputForm id='Password' type='password' name='password' placeholder="Password" label="Password" value={password} onChange={onChange}/>
                                 <div className="text-right">
                                     <div className="inline-block mt-5 text-blue-700 cursor-pointer hover:text-blue-900 hover:underline" id="forgot-password">Lupa Password?</div>
                                 </div>
                                 <Button text="Masuk" type="submit"/>
-                                <p class="mt-5 text-center">Belum punya akun?<Link to="/register" class="text-blue-700 hover:text-blue-900 hover:underline">Daftar Sekarang</Link></p>
+                                <p className="mt-5 text-center">Belum punya akun?<Link to="/register" className="text-blue-700 hover:text-blue-900 hover:underline">Daftar Sekarang</Link></p>
                             </form>
                         </div>
                     </div>
