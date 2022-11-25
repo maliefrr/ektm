@@ -9,6 +9,7 @@ import Dashboard from './pages/Dashboard';
 function App() {
   return (
     <div className="App">
+      <div>
       <Router>
         <Routes>
           <Route path='/' element={<Login />}/>
@@ -16,6 +17,7 @@ function App() {
           <Route path='/dashboard' element={<Dashboard/>}/>
         </Routes>
       </Router>
+      </div>
       <ToastContainer />
     </div>
   );
