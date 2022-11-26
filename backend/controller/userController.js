@@ -46,7 +46,7 @@ const register = asyncHandler( async (req,res) => {
         } else {
             const data = await userModel.create({
                 username,email,password : hash
-                ,name,role
+                ,name,role : "admin"
             })
             data.save()
             res.status(201).json({
