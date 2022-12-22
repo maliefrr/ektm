@@ -1,5 +1,4 @@
 const axios = require("axios");
-const jwt = require("jsonwebtoken")
 const userModel = require("../backend/models/userModel")
 
 
