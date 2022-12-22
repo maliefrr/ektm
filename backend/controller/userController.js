@@ -28,8 +28,6 @@ const getAllUser = asyncHandler( async (req,res) => {
 
 const register = asyncHandler( async (req,res) => {
     const {name,username,email,password,role} = req.body;
-    const salt = await bcrypt.genSalt(10);
-    const hash = await bcrypt.hash(password,salt)
 
     if(!name || !username || !email || !password) {
         res.status(400).json({
@@ -44,6 +42,8 @@ const register = asyncHandler( async (req,res) => {
                 message: "Username has been already exist"
             })
         } else {
+            const salt = await bcrypt.genSalt(10);
+            const hash = await bcrypt.hash(password,salt)
             const data = await userModel.create({
                 username,email,password : hash
                 ,name,role : "admin"
