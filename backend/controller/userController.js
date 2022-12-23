@@ -27,7 +27,7 @@ const getAllUser = asyncHandler( async (req,res) => {
 })
 
 const register = asyncHandler( async (req,res) => {
-    const {name,username,email,password,role} = req.body;
+    const {name,username,email,password} = req.body;
 
     if(!name || !username || !email || !password) {
         res.status(400).json({
@@ -70,17 +70,16 @@ const login = asyncHandler( async (req,res) => {
         })
     }
     const user = await userModel.findOne({username})
-    const checkPassword = await bcrypt.compare(password,user.password)
-    if(user && checkPassword){
-        res.status(200).json({
-            statusCode: 200,
-            message: "Success",
-            data: {
-                username: user.username,
-                email: user.email,
-                token: getToken(user.id)
-            }
-        })
+    if(user && await bcrypt.compare(password,user.password)){
+            res.status(200).json({
+                statusCode: 200,
+                message: "Success",
+                data: {
+                    username: user.username,
+                    email: user.email,
+                    token: getToken(user.id)
+                }
+            })
     } else {
         res.status(401).json({
             statusCode: 401,

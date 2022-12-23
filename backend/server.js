@@ -1,6 +1,6 @@
 const express = require("express")
 const bodyParser = require("body-parser")
-const dotenv = require("dotenv").config()
+require("dotenv").config()
 const connectDB = require("./config/db.js")
 const multer = require("multer")
 const app = express()

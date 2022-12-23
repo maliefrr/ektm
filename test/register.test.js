@@ -10,7 +10,7 @@ test("Register user function that user did not fill username field should throw 
             password: "firman123"
         })
     } catch (error) {
-        console.error(error.response.data.message)
+        // console.error(error.response.data.message)
         expect(error.response.data.message).toBe("The field cannot be blank")
     }
 })
@@ -41,7 +41,7 @@ test("Register user function that user did not fill email field should throw an 
 
 test("Register user function that user did not fill password field should throw an error",async () => {
     try {
-        const response = await axios.post("http://localhost:5000/api/users/register",{
+        await axios.post("http://localhost:5000/api/users/register",{
             name: "Muhammad Firmansyah",
             email: "Firman1212@gmail.com",
             username: "firman1212"
