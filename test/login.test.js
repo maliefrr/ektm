@@ -20,15 +20,6 @@ test("Try login with wrong password should return an error",async () => {
         expect(error.response.data.message).toBe("The user or password you input are invalid")
     }
 })
-test("Login user must return an object",async () => {
-    const response = await axios.post("http://localhost:5000/api/users/login",{
-        username: "admin",
-        password: "admin123"
-    })
-
-    expect(response.status).toBe(200);
-    expect(response.data.data).toHaveProperty("token")
-})
 test("User did not fill the username field",async () => {
     try {
         await axios.post("http://localhost:5000/api/users/login",{
@@ -46,4 +37,13 @@ test("User did not fill the password field",async () => {
     } catch (error) {
         expect(error.response.data.message).toBe("The field cannot be blank")
     }
+})
+test("Login user must return an object",async () => {
+    const response = await axios.post("http://localhost:5000/api/users/login",{
+        username: "admin",
+        password: "admin123"
+    })
+
+    expect(response.status).toBe(200);
+    expect(response.data.data).toHaveProperty("token")
 })
