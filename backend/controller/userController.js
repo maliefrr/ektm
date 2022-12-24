@@ -81,8 +81,8 @@ const login = asyncHandler( async (req,res) => {
                 }
             })
     } else {
-        res.status(401).json({
-            statusCode: 401,
+        res.status(400).json({
+            statusCode: 400,
             message: "The user or password you input are invalid"
         })
         }

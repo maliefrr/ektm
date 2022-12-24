@@ -10,7 +10,7 @@ test("Register user function that user did not fill username field should throw 
             password: "firman123"
         })
     } catch (error) {
-        // console.error(error.response.data.message)
+        expect(error.response.status).toBe(400)
         expect(error.response.data.message).toBe("The field cannot be blank")
     }
 })
@@ -23,6 +23,7 @@ test("Register user function that user did not fill name field should throw an e
             password: "firman123"
         })
     } catch (error) {
+        expect(error.response.status).toBe(400)
         expect(error.response.data.message).toBe("The field cannot be blank")
     }
 })
@@ -35,6 +36,7 @@ test("Register user function that user did not fill email field should throw an 
             password: "firman123"
         })
     } catch (error) {
+        expect(error.response.status).toBe(400)
         expect(error.response.data.message).toBe("The field cannot be blank")
     }
 })
@@ -47,6 +49,7 @@ test("Register user function that user did not fill password field should throw 
             username: "firman1212"
         })
     } catch (error) {
+        expect(error.response.status).toBe(400)
         expect(error.response.data.message).toBe("The field cannot be blank")
     }
 })
@@ -74,6 +77,7 @@ test("Register user function return an error because user enter the user that al
             password: "firman123"
         })
     } catch (error) {
+        expect(error.response.status).toBe(400)
         expect(error.response.data.message).toBe("Username has been already exist")
     }
 })
