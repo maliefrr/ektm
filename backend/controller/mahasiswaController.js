@@ -12,17 +12,17 @@ const addMahasiswa = asyncHandler( async (req,res) => {
     const authorizeUser = await userModel.findById(role)
     const filePath = req.file.path;
     
+    if(authorizeUser.role !== "admin") {
+        res.status(401).json({
+            statusCode: 401,
+            message: "User not authorized"
+        })
     if(!name || !prodi || !nim || !alamat) {
         res.status(400).json({
             statusCode: 400,
             message: "The field cannot be blank"
         })
     }
-    if(authorizeUser.role !== "admin") {
-        res.status(401).json({
-            statusCode: 401,
-            message: "User not authorized"
-        })
     } else {
         const imageUpload = await uploader(process.env.IMG_API, filePath)
         const data = await mahasiswaModel.create({

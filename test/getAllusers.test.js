@@ -11,7 +11,7 @@ test("Get all users while user role is mahasiswa should return error",async () =
         const token = loginResponse.data.data.token
 
         // send a request to protected route
-        const response = await axios.get("http://localhost:5000/api/users/all",{
+        await axios.get("http://localhost:5000/api/users/all",{
             headers: {
                 Authorization: `Bearer ${token}`
             }
