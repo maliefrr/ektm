@@ -34,8 +34,6 @@ const getAllMahasiswa = asyncHandler(async (req,res) => {
 
 const addMahasiswa = asyncHandler( async (req,res) => {
     const {name,prodi,nim,alamat,gol_darah,jenis_kelamin} = req.body;
-    const salt = await bcrypt.genSalt(10);
-    const filePath = req.file.path;
     
     if(!name || !prodi || !nim || !alamat) {
         res.status(400).json({
@@ -44,13 +42,24 @@ const addMahasiswa = asyncHandler( async (req,res) => {
         })
     }
     else {
-        const imageUpload = await uploader(process.env.IMG_API, filePath)
-        const data = await mahasiswaModel.create({
-            name,prodi,alamat,pas_foto : imageUpload.image.url, nim,
-            gol_darah : gol_darah ? gol_darah : "-",
-            jenis_kelamin: jenis_kelamin ? jenis_kelamin : "-"
-        })
-        data.save()
+        const salt = await bcrypt.genSalt(10);
+        const filePath = req.file.path
+        if(!filePath){
+            const imageUpload = await uploader(process.env.IMG_API, filePath)
+            const data = await mahasiswaModel.create({
+                name,prodi,alamat,pas_foto : imageUpload.image.url , nim,
+                gol_darah : gol_darah ? gol_darah : "-",
+                jenis_kelamin: jenis_kelamin ? jenis_kelamin : "-"
+            })
+            data.save()
+        } else {
+            const data = await mahasiswaModel.create({
+                name,prodi,alamat,pas_foto : imageUpload.image.url , nim,
+                gol_darah : gol_darah ? gol_darah : "-",
+                jenis_kelamin: jenis_kelamin ? jenis_kelamin : "-"
+            })
+            data.save()
+        }
         const createdUser = await userModel.create({
             username: data.nim,
             email: `${nim}@uho.ac.id`,

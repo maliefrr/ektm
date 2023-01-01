@@ -71,7 +71,7 @@ test("Register user function should return an object",async () => {
             password: "firman123"
         })
 
-        console.log(response);
+
         expect(response.status).toBe(201);
         expect(response.data.data).toHaveProperty("id");
         expect(response.data.data).toHaveProperty("token")
