@@ -57,7 +57,11 @@ test("User did not fill the alamat field should return an error",async () => {
         expect(error.response.data.message).toBe("The field cannot be blank")
     }
 })
-test("User did not fill the alamat field should return an error",async () => {
+test("User add mahasiswa should return an object",async () => {
+    const mock = new MockAdapter(axios)
+
+    mock.onPost("http://localhost:5000/api/mahasiswa/add").reply(200)
+
         const response = await axios.post("http://localhost:5000/api/mahasiswa/add",{
                     name : "F1G119031",
                     nim : "F1G119031",
@@ -67,5 +71,5 @@ test("User did not fill the alamat field should return an error",async () => {
                     jenis_kelamin : "L"
         })
 
-        
+        expect(response.status).toBe(200)
 })
