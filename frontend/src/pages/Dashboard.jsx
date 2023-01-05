@@ -17,7 +17,7 @@ const Dashboard = () => {
     }
     return (
         <>
-            <div className="flex flex-col h-screen bg-gray-200">
+            <div className="flex flex-col h-screen bg-gray-100">
                 {/* sidebar */}
                 <button className="block md:hidden p-2 text-gray-800 hover:text-gray-700" onClick={() => setMenuOpen(!menuOpen)} style={{position: "absolute",
                                     left: menuOpen ? "250px" : "16px",
@@ -44,6 +44,9 @@ const Dashboard = () => {
                         <p className="text-gray-500">Welcome Back!!</p>
                     </div>
                     <ul className="list-none p-0">
+                        <li className='py-2 px-6'>
+                            <Link to={"/dashboard"} className="block text-white hover:bg-gray-700 rounded-full py-1 px-3">My Profile</Link>
+                        </li>
                         <li className='py-2 px-6'>
                             <Link to={"/dashboard"} className="block text-white hover:bg-gray-700 rounded-full py-1 px-3">Home</Link>
                         </li>
