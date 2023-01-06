@@ -1,6 +1,7 @@
 import React from 'react'
 import {useState} from 'react'
 import SideBar from '../components/SideBar'
+import Button from '../components/Button'
 const Dashboard = () => {
     // const {user} = useSelector((state) => state.auth)
     const [mahasiswaData, setMahasiswaData] = useState([
@@ -30,9 +31,12 @@ const Dashboard = () => {
                 <div className='flex-1 h-full'>
                     <div className="bg-gray-100 p-4 overflow-y-scroll overflow-x-hidden w-screen">
                         <div className='my-2'>
-                            <h2 className="text-lg font-bold md:ml-[17rem] mb-2 text-center">User</h2>
+                            <h2 className="text-lg font-bold md:ml-[17rem] text-center">User</h2>
                             <table className="text-center md:ml-[16rem] table-collapse w-[80%]">
                                 <thead>
+                                    <tr>
+                                        <Button text="Add User" className="mb-3"/>
+                                    </tr>
                                     <tr>
                                         <th className="px-4 py-2 border-2 border-black">Username</th>
                                         <th className="px-4 py-2 border-2 border-black">Email</th>
@@ -63,9 +67,12 @@ const Dashboard = () => {
                     </div>
                     <div className="bg-gray-100 p-4 overflow-y-scroll overflow-x-hidden">
                         <div className='my-2'>
-                            <h2 className="text-lg font-bold md:ml-[17rem] mb-2 text-center">Mahasiswa</h2>
+                            <h2 className="text-lg font-bold md:ml-[17rem] text-center">Mahasiswa</h2>
                             <table className="text-center md:ml-[16rem] table-collapse w-[80%]">
                                 <thead>
+                                    <tr>
+                                        <Button text="Add Mahasiswa" className="mb-3"/>
+                                    </tr>
                                     <tr>
                                         <th className="px-4 py-2 border-2 border-black">Nama</th>
                                         <th className="px-4 py-2 border-2 border-black">Prodi</th>

@@ -52,7 +52,7 @@ const SideBar = () => {
                             <Link to={"/dashboard"} className="block text-white hover:bg-gray-700 rounded-full py-1 px-3">Mahasiswa</Link>
                         </li>
                         <li className='py-2 px-6'>
-                            <Button text="Logout" onClick={onLogout}/>
+                            <Button text="Logout" onClick={onLogout} className="mx-auto"/>
                         </li>
                     </ul>
                 </div>
