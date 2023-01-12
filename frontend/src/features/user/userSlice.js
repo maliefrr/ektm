@@ -1,12 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import mahasiswaService from './mahasiswaServices'
+import userService from './userServices'
 
 const initialState = {
-    mahasiswa: [],
-    mahasiswaIsError: false,
-    mahasiswaIsSuccess: false,
-    mahasiswaIsLoading: false,
-    mahasiswaMessage: '',
+    users: [],
+    userIsError: false,
+    userIsSuccess: false,
+    userIsLoading: false,
+    userMessage: '',
 }
 
 // Create new goal
@@ -28,13 +28,13 @@ const initialState = {
 //   }
 // )
 
-// Get user goals
-export const getMahasiswa = createAsyncThunk(
-  'mahasiswa/getAll',
+// Get user
+export const getUser = createAsyncThunk(
+  'user/getAll',
   async (_, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.data.token
-      return await mahasiswaService.getMahasiswaData(token)
+      return await userService.getUserData(token)
     } catch (error) {
       const message =
         (error.response &&
@@ -66,11 +66,11 @@ export const getMahasiswa = createAsyncThunk(
 //   }
 // )
 
-export const mahasiswaSlice = createSlice({
-  name: 'mahasiswa',
+export const userSlice = createSlice({
+  name: 'user',
   initialState,
   reducers: {
-    mahasiswaReset: (state) => initialState,
+    userReset: (state) => initialState,
   },
   extraReducers: (builder) => {
     builder
@@ -87,18 +87,18 @@ export const mahasiswaSlice = createSlice({
     //     state.isError = true
     //     state.message = action.payload
     //   })
-      .addCase(getMahasiswa.pending, (state) => {
-        state.mahasiswaIsLoading = true
+      .addCase(getUser.pending, (state) => {
+        state.userIsLoading = true
       })
-      .addCase(getMahasiswa.fulfilled, (state, action) => {
-        state.mahasiswaIsLoading = false
-        state.mahasiswaIsSuccess = true
-        state.mahasiswa = action.payload
+      .addCase(getUser.fulfilled, (state, action) => {
+        state.userIsLoading = false
+        state.userIsSuccess = true
+        state.users = action.payload
       })
-      .addCase(getMahasiswa.rejected, (state, action) => {
-        state.mahasiswaIsLoading = false
-        state.mahasiswaIsError = true
-        state.mahasiswaMessage = action.payload
+      .addCase(getUser.rejected, (state, action) => {
+        state.userIsLoading = false
+        state.userIsError = true
+        state.userMessage = action.payload
       })
     //   .addCase(deleteGoal.pending, (state) => {
     //     state.isLoading = true
@@ -118,5 +118,5 @@ export const mahasiswaSlice = createSlice({
   },
 })
 
-export const { mahasiswaReset } = mahasiswaSlice.actions
-export default mahasiswaSlice.reducer
+export const { userReset } = userSlice.actions
+export default userSlice.reducer

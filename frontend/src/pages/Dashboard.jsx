@@ -7,19 +7,21 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { RotatingLines } from  'react-loader-spinner'
 import { useEffect } from 'react'
-import { getMahasiswa,reset } from '../features/mahasiswa/mahasiswaSlice'
+import { getMahasiswa,mahasiswaReset } from '../features/mahasiswa/mahasiswaSlice'
+import { getUser, userReset } from '../features/user/userSlice'
 const Dashboard = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const {user} = useSelector((state) => state.auth)
-    const {mahasiswa,isError,isLoading,message} = useSelector((state) => state.mahasiswa)
+    const {mahasiswa,mahasiswaIsError,mahasiswaIsLoading,mahasiswaMessage} = useSelector((state) => state.mahasiswa)
+    const {users,userIsError,userIsLoading,userMessage} = useSelector((state) => state.user)
     const [userData, setUserData] = useState([
     { id: 1, name: "John", age: 25 },
     { id: 2, name: "Jane", age: 26 },
     { id: 3, name: "James", age: 27 },
     ]);
 
-
+    console.log(users)
     const handleDeleteMahasiswa = (id) => {
         // setMahasiswaData(mahasiswaData.filter((data) => data.id !== id))
     }
@@ -30,8 +32,12 @@ const Dashboard = () => {
     
 
     useEffect(() => {
-        if (isError) {
-        toast.error(message)
+        if (mahasiswaIsError) {
+        toast.error(mahasiswaMessage)
+        }
+
+        if(userIsError) {
+            toast.error(userMessage)
         }
 
         if (!user) {
@@ -39,13 +45,14 @@ const Dashboard = () => {
         }
 
         dispatch(getMahasiswa())
-
+        dispatch(getUser())
         return () => {
-        dispatch(reset())
+        dispatch(mahasiswaReset())
+        dispatch(userReset())
         }
-    }, [user, navigate, isError, message, dispatch])
+    }, [user, navigate, mahasiswaIsError, mahasiswaMessage, dispatch,userIsError,userMessage])
 
-    if(isLoading){
+    if(mahasiswaIsLoading || userIsLoading){
         return <div className='loadingSpinnerContainer'>
             <RotatingLines
             strokeColor="black"
@@ -77,10 +84,10 @@ const Dashboard = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {userData.map(user => (
+                                    {users.map(user => (
                                         <tr key={user.id}>
-                                            <td className='px-4 py-2 border-2 border-black'>{user.name}</td>
-                                            <td className='px-4 py-2 border-2 border-black'>{user.age}</td>
+                                            <td className='px-4 py-2 border-2 border-black'>{user.username}</td>
+                                            <td className='px-4 py-2 border-2 border-black'>{user.email}</td>
                                             <td className='px-4 py-2 border-2 border-black'>
                                                 <button className="px-2">
                                                     Edit
