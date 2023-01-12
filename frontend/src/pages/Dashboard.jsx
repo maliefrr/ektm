@@ -2,28 +2,61 @@ import React from 'react'
 import {useState} from 'react'
 import SideBar from '../components/SideBar'
 import Button from '../components/Button'
+import {toast} from "react-toastify"
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { RotatingLines } from  'react-loader-spinner'
+import { useEffect } from 'react'
+import { getMahasiswa,reset } from '../features/mahasiswa/mahasiswaSlice'
 const Dashboard = () => {
-    // const {user} = useSelector((state) => state.auth)
-    const [mahasiswaData, setMahasiswaData] = useState([
-    { id: 1, name: "Alice", age: 20 },
-    { id: 2, name: "Bob", age: 21 },
-    { id: 3, name: "Charlie", age: 22 },
-    ]);
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const {user} = useSelector((state) => state.auth)
+    const {mahasiswa,isError,isLoading,message} = useSelector((state) => state.mahasiswa)
     const [userData, setUserData] = useState([
     { id: 1, name: "John", age: 25 },
     { id: 2, name: "Jane", age: 26 },
     { id: 3, name: "James", age: 27 },
     ]);
 
+
     const handleDeleteMahasiswa = (id) => {
-        setMahasiswaData(mahasiswaData.filter((data) => data.id !== id))
+        // setMahasiswaData(mahasiswaData.filter((data) => data.id !== id))
     }
 
     const handleDeleteUser = (id) => {
         setUserData(userData.filter((data) => data.id !== id))
     }
     
-    
+
+    useEffect(() => {
+        if (isError) {
+        toast.error(message)
+        }
+
+        if (!user) {
+        navigate('/')
+        }
+
+        dispatch(getMahasiswa())
+
+        return () => {
+        dispatch(reset())
+        }
+    }, [user, navigate, isError, message, dispatch])
+
+    if(isLoading){
+        return <div className='loadingSpinnerContainer'>
+            <RotatingLines
+            strokeColor="black"
+            strokeWidth="5"
+            animationDuration="0.75"
+            width="96"
+            visible={true}
+            />
+        </div>
+    }
+
     return (
         <>
             <div className="flex flex-col h-screen bg-gray-100">
@@ -80,10 +113,10 @@ const Dashboard = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {mahasiswaData.map(mahasiswa => (
+                                    {mahasiswa.map(mahasiswa => (
                                         <tr key={mahasiswa.id}>
                                             <td className='px-4 py-2 border-2 border-black'>{mahasiswa.name}</td>
-                                            <td className='px-4 py-2 border-2 border-black'>{mahasiswa.age}</td>
+                                            <td className='px-4 py-2 border-2 border-black'>{mahasiswa.prodi}</td>
                                             <td className='px-4 py-2 border-2 border-black'>
                                                 <button className="px-2 ">
                                                     Edit

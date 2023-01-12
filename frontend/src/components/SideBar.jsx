@@ -4,7 +4,7 @@ import { useDispatch} from 'react-redux'
 import {logout,reset} from "../features/auth/authSlice"
 import Button from './Button'
 import {useNavigate,Link} from "react-router-dom"
-const SideBar = () => {
+const SideBar = (props) => {
     const [menuOpen, setMenuOpen] = useState(false);
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -40,16 +40,16 @@ const SideBar = () => {
                     </div>
                     <ul className="list-none p-0">
                         <li className='py-2 px-6'>
-                            <Link to={"/dashboard"} className="block text-white hover:bg-gray-700 rounded-full py-1 px-3">My Profile</Link>
+                            <Link to={"/dashboard/me"} className="block text-white hover:bg-gray-700 rounded-full py-1 px-3">My Profile</Link>
                         </li>
                         <li className='py-2 px-6'>
                             <Link to={"/dashboard"} className="block text-white hover:bg-gray-700 rounded-full py-1 px-3">Home</Link>
                         </li>
                         <li className='py-2 px-6'>
-                            <Link to={"/dashboard"} className="block text-white hover:bg-gray-700 rounded-full py-1 px-3">Users</Link>
+                            <Link to={"/dashboard/users"} className="block text-white hover:bg-gray-700 rounded-full py-1 px-3">Users</Link>
                         </li>
                         <li className='py-2 px-6'>
-                            <Link to={"/dashboard"} className="block text-white hover:bg-gray-700 rounded-full py-1 px-3">Mahasiswa</Link>
+                            <Link to={"/dashboard/mahasiswa"} className="block text-white hover:bg-gray-700 rounded-full py-1 px-3">Mahasiswa</Link>
                         </li>
                         <li className='py-2 px-6'>
                             <Button text="Logout" onClick={onLogout} className="mx-auto"/>

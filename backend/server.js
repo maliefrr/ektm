@@ -3,6 +3,7 @@ const bodyParser = require("body-parser")
 require("dotenv").config()
 const connectDB = require("./config/db.js")
 const multer = require("multer")
+const cors = require('cors');
 const app = express()
 
 connectDB()
@@ -40,6 +41,11 @@ app.use(express.urlencoded({
     extended: false
 }))
 app.use(bodyParser.json())
+app.use(cors({
+  origin: 'http://localhost:3000',
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 // load route
 app.use("/api/users/",require("./routes/userRoute.js"))

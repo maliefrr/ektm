@@ -19,6 +19,7 @@ const getAllMahasiswa = asyncHandler(async (req,res) => {
             statusCode: 200,
             data : data.map(user => {
                 return {
+                    id: user.id,
                     name : user.name,
                     nim : user.nim,
                     prodi : user.prodi,
