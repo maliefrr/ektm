@@ -34,7 +34,7 @@ const getAllMahasiswa = asyncHandler(async (req,res) => {
 })
 
 const addMahasiswa = asyncHandler( async (req,res) => {
-    const {name,prodi,nim,alamat,gol_darah,jenis_kelamin} = req.body;
+    const {name,prodi,nim,alamat,gol_darah,jenis_kelamin,pas_foto} = req.body;
     
     if(!name || !prodi || !nim || !alamat) {
         res.status(400).json({
@@ -45,14 +45,27 @@ const addMahasiswa = asyncHandler( async (req,res) => {
     else {
         const salt = await bcrypt.genSalt(10);
         const filePath = req.file.path
+        const imageUpload = await uploader(process.env.IMG_API, filePath)
         if(!filePath){
-            const imageUpload = await uploader(process.env.IMG_API, filePath)
             const data = await mahasiswaModel.create({
                 name,prodi,alamat,pas_foto : imageUpload.image.url , nim,
                 gol_darah : gol_darah ? gol_darah : "-",
                 jenis_kelamin: jenis_kelamin ? jenis_kelamin : "-"
             })
             data.save()
+            const createdUser = await userModel.create({
+                username: data.nim,
+                email: `${nim}@uho.ac.id`,
+                password: await bcrypt.hash(nim,salt),
+                role: "mahasiswa",
+                name
+            })
+            createdUser.save()
+            res.status(200).json({
+                statusCode: 200,
+                message: "Success",
+                data
+            })
         } else {
             const data = await mahasiswaModel.create({
                 name,prodi,alamat,pas_foto : imageUpload.image.url , nim,
@@ -60,20 +73,20 @@ const addMahasiswa = asyncHandler( async (req,res) => {
                 jenis_kelamin: jenis_kelamin ? jenis_kelamin : "-"
             })
             data.save()
+            const createdUser = await userModel.create({
+                username: data.nim,
+                email: `${nim}@uho.ac.id`,
+                password: await bcrypt.hash(nim,salt),
+                role: "mahasiswa",
+                name
+            })
+            createdUser.save()
+            res.status(200).json({
+                statusCode: 200,
+                message: "Success",
+                data
+            })
         }
-        const createdUser = await userModel.create({
-            username: data.nim,
-            email: `${nim}@uho.ac.id`,
-            password: await bcrypt.hash(nim,salt),
-            role: "mahasiswa",
-            name
-        })
-        createdUser.save()
-        res.status(200).json({
-            statusCode: 200,
-            message: "Success",
-            data
-        })
     }
 })
 
