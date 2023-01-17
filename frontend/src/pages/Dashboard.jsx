@@ -10,7 +10,7 @@ import { RotatingLines } from  'react-loader-spinner'
 import { useEffect } from 'react'
 import {Modal} from 'react-responsive-modal'
 import { getMahasiswa,mahasiswaReset } from '../features/mahasiswa/mahasiswaSlice'
-import { getUser, userReset } from '../features/user/userSlice'
+import { getUser, userReset, deleteUser } from '../features/user/userSlice'
 const Dashboard = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -33,9 +33,6 @@ const Dashboard = () => {
     const {user} = useSelector((state) => state.auth)
     const {mahasiswa,mahasiswaIsError,mahasiswaIsLoading,mahasiswaMessage} = useSelector((state) => state.mahasiswa)
     const {users,userIsError,userIsLoading,userMessage} = useSelector((state) => state.user)
-
-    console.log(users)
-    console.log(userDetail)
     const handleDeleteMahasiswa = (id) => {
         // setMahasiswaData(mahasiswaData.filter((data) => data.id !== id))
     }
@@ -83,7 +80,7 @@ const Dashboard = () => {
         dispatch(userReset())
         }
     }, [user, navigate, mahasiswaIsError, mahasiswaMessage, dispatch,userIsError,userMessage])
-
+    console.log(userMessage)
     if(mahasiswaIsLoading || userIsLoading){
         return <div className='loadingSpinnerContainer'>
             <RotatingLines
@@ -124,7 +121,7 @@ const Dashboard = () => {
                                                 <button className="px-2">
                                                     Edit
                                                 </button>
-                                                <button className="px-2">
+                                                <button className="px-2" onClick={() => {toast.success("data has been successfully deleted"); dispatch(deleteUser(user.id))}}>
                                                     Delete
                                                 </button>
                                                 <button className="px-2" onClick={() => {setUserDetail({
