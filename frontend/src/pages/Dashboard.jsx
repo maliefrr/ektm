@@ -5,7 +5,7 @@ import 'react-responsive-modal/styles.css';
 import {toast} from "react-toastify"
 import {useState} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { RotatingLines } from  'react-loader-spinner'
 import { useEffect } from 'react'
 import {Modal} from 'react-responsive-modal'
@@ -144,7 +144,7 @@ const Dashboard = () => {
                             <table className="text-center md:ml-[16rem] table-collapse w-[80%]">
                                 <thead>
                                     <tr>
-                                        <Button text="Add Mahasiswa" className="mb-3"/>
+                                        <Link to={"/add/mahasiswa"} className="block mt-5 bg-orange-500 px-4 py-1 rounded-md text-white hover:bg-orange-600 active:bg-orange-700 mb-3 md:w-1/4 sm:w-full">Add Mahasiswa</Link>
                                     </tr>
                                     <tr>
                                         <th className="px-4 py-2 border-2 border-black">Nama</th>

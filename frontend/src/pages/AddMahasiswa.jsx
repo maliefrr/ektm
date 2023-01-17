@@ -12,7 +12,10 @@ import { useEffect } from 'react'
 import { RotatingLines } from  'react-loader-spinner'
 
 
-const Register = () => {
+
+// Copying from register did not change anything yet
+
+const AddMahasiswa = () => {
     const [formData, setFormData] = useState({
         nama: "",
         username: "",
@@ -113,4 +116,4 @@ const Register = () => {
     )
 }
 
-export default Register
+export default AddMahasiswa

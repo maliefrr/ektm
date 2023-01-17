@@ -78,7 +78,7 @@ const Login = () => {
                     </div>
                 </div>
                 <div className='shadow-lg p-4 bg-slate-100/30 backdrop-blur-md max-w-sm my-2 mx-auto rounded-md md:my-auto lg:m-0 lg:rounded-none lg:w-full lg:h-full lg:flex-col'>
-                    <Link to="/home" className="flex items-center hover:font-medium pb-5 lg:pb-0">
+                    <Link to="/" className="flex items-center hover:font-medium pb-5 lg:pb-0">
                         <img src={logo} alt="logo" width="30" className="" />
                         <h3 className="ml-3 font-dancing">E-KTM Web Admin</h3>
                     </Link>

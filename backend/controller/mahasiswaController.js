@@ -34,7 +34,7 @@ const getAllMahasiswa = asyncHandler(async (req,res) => {
 })
 
 const addMahasiswa = asyncHandler( async (req,res) => {
-    const {name,prodi,nim,alamat,gol_darah,jenis_kelamin,pas_foto} = req.body;
+    const {name,prodi,nim,alamat,gol_darah,jenis_kelamin} = req.body;
     
     if(!name || !prodi || !nim || !alamat) {
         res.status(400).json({
