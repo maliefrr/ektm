@@ -75,6 +75,16 @@ const register = asyncHandler( async (req,res) => {
     }
 })
 
+const deleteUser = async (req,res) => {
+    const data = await userModel.findByIdAndDelete(req.params.id);
+    res.status(200).json({
+        data: {
+            user: data.username,
+            id: data.id
+        }
+    })
+}
+
 const login = asyncHandler( async (req,res) => {
     const {username,password} = req.body;
     if(!username || !password){
@@ -110,5 +120,5 @@ const getToken = (id) => {
 }
 
 module.exports = {
-    getAllUser,register,login
+    getAllUser,register,login,deleteUser
 }

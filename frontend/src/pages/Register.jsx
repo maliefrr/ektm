@@ -85,8 +85,8 @@ const Register = () => {
 
     return (
     <div className='font-arima bg-gradient-to-r from-sky-500 to-gray-400 lg:h-full md:h-screen h-screen'>
-        <main className="max-w-screen-2xl flex items-center mx-auto">
-            <div className="fixed sm:top-100 sm:bottom-100 lg:top-0 lg:bottom-0 left-0 right-0 flex">
+        <main className="max-w-screen-2xl flex items-center mx-auto h-screen">
+            <div className="fixed sm:top-100 sm:bottom-100 lg:top-0 lg:bottom-0 left-0 right-0 flex h-full">
                 <img src={logo} alt="logo" width="250" className="m-auto" />
             </div>
             <div className='shadow-lg p-4 bg-slate-100/30 backdrop-blur-md w-full max-w-screen-lg rounded-md mx-auto md:w-4/5 md:my-6 lg:text-lg'>
@@ -104,7 +104,7 @@ const Register = () => {
                     <InputForm id='password' type='password' name='password' placeholder="Password" label="Password" value={password} onChange={onChange}/>
                     <InputForm id='passwordConfirmation' type='password' name='passwordConfirmation' placeholder="Confirmation Password" label="Password Confirmation" value={passwordConfirmation} onChange={onChange}/>
                     <Button text="Daftar" type="Submit"/>
-                    <p className="mt-5 text-center">Sudah punya akun? <a href="/login" className="text-blue-700 hover:text-blue-900 hover:underline">Masuk</a></p>
+                    <p className="mt-5 text-center">Sudah punya akun? <a href="/" className="text-blue-700 hover:text-blue-900 hover:underline">Masuk</a></p>
                     </form>
                 </div>
             </div>

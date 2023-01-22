@@ -14,9 +14,20 @@ const getUserData = async (token) => {
     return response.data.data
 }
 
+const deleteUser = async (userId,token) => {
+    const config = {
+        headers : {
+            Authorization: `Bearer ${token}`
+        }
+    }
+
+    const response = await axios.delete(`${API_URL}/delete/${userId}`,config)
+    return response.data.data
+}
+
 
 const userService = {
-    getUserData
+    getUserData,deleteUser
 }
 
 export default userService
