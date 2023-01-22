@@ -15,19 +15,14 @@ const Dashboard = () => {
     const {user} = useSelector((state) => state.auth)
     const {mahasiswa,mahasiswaIsError,mahasiswaIsLoading,mahasiswaMessage} = useSelector((state) => state.mahasiswa)
     const {users,userIsError,userIsLoading,userMessage} = useSelector((state) => state.user)
-    const [userData, setUserData] = useState([
-    { id: 1, name: "John", age: 25 },
-    { id: 2, name: "Jane", age: 26 },
-    { id: 3, name: "James", age: 27 },
-    ]);
 
     console.log(users)
     const handleDeleteMahasiswa = (id) => {
-        // setMahasiswaData(mahasiswaData.filter((data) => data.id !== id))
+        console.log(id)
     }
 
     const handleDeleteUser = (id) => {
-        setUserData(userData.filter((data) => data.id !== id))
+        console.log(id)
     }
     
 

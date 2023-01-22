@@ -15,7 +15,8 @@ const getAllUser = asyncHandler( async (req,res) => {
                 return {
                     username : user.username,
                     email: user.email,
-                    role: user.role
+                    role: user.role,
+                    id: user.id
                 }
             })
         })
@@ -24,6 +25,19 @@ const getAllUser = asyncHandler( async (req,res) => {
         statusCode: 401,
         message: "User not authorized"
     })
+})
+
+const deleteUser = asyncHandler(async (req,res) => {
+    const authorizeUser = req.user.id;
+    const user = await userModel.findById(authorizeUser)
+    if(authorizeUser && user.role === "admin"){
+        const target = req.body;
+        await userModel.findByIdAndDelete(target)
+        res.status(200).json({
+            statusCode: 200,
+            message: "Data has been successfully deleted"
+        })
+    }
 })
 
 const register = asyncHandler( async (req,res) => {
