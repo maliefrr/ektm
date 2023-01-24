@@ -14,9 +14,20 @@ const getMahasiswaData = async (token) => {
     return response.data.data
 }
 
+// add new mahasiswa
+const addMahasiswa = async (mahasiswaData) => {
+    const response = await axios.post(`${API_URL}/add`,mahasiswaData, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    });
+
+    return response.data.data
+}
+
 
 const mahasiswaService = {
-    getMahasiswaData
+    getMahasiswaData,addMahasiswa
 }
 
 export default mahasiswaService
