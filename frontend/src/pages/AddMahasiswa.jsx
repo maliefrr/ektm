@@ -2,7 +2,6 @@ import React,{useState, useEffect} from 'react'
 import InputForm from '../components/InputForm'
 import Button from '../components/Button'
 import { logout } from '../features/auth/authSlice'
-import { useDispatch } from 'react-redux'
 import logo from "../assets/logo-uho.png"
 import { toast } from 'react-toastify'
 import { useDispatch,useSelector } from 'react-redux'
@@ -10,7 +9,6 @@ import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import { RotatingLines } from  'react-loader-spinner'
 import { mahasiswaReset, addMahasiswa } from '../features/mahasiswa/mahasiswaSlice'
-import {logout} from "../features/auth/authSlice"
 const AddMahasiswa = () => {
     const [formData,setFormData] = useState({
         name: "",

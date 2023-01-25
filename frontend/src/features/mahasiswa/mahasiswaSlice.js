@@ -14,7 +14,6 @@ export const addMahasiswa = createAsyncThunk(
   'mahasiswa/add',
   async (mahasiswaData, thunkAPI) => {
     try {
-      const token = thunkAPI.getState().auth.user.data.token
       return await mahasiswaService.addMahasiswa(mahasiswaData)
     } catch (error) {
       const message =
