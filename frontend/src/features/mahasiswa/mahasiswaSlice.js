@@ -9,26 +9,27 @@ const initialState = {
     mahasiswaMessage: '',
 }
 
-// Create new goal
-// export const createGoal = createAsyncThunk(
-//   'goals/create',
-//   async (goalData, thunkAPI) => {
-//     try {
-//       const token = thunkAPI.getState().auth.user.token
-//       return await goalService.createGoal(goalData, token)
-//     } catch (error) {
-//       const message =
-//         (error.response &&
-//           error.response.data &&
-//           error.response.data.message) ||
-//         error.message ||
-//         error.toString()
-//       return thunkAPI.rejectWithValue(message)
-//     }
-//   }
-// )
+// Create new mahasiswa
+export const addMahasiswa = createAsyncThunk(
+  'mahasiswa/add',
+  async (mahasiswaData, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.data.token
+      return await mahasiswaService.addMahasiswa(mahasiswaData)
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString()
+        console.log(error)
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
 
-// Get user goals
+// Get all mahasiswa
 export const getMahasiswa = createAsyncThunk(
   'mahasiswa/getAll',
   async (_, thunkAPI) => {
@@ -74,19 +75,19 @@ export const mahasiswaSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-    //   .addCase(createGoal.pending, (state) => {
-    //     state.isLoading = true
-    //   })
-    //   .addCase(createGoal.fulfilled, (state, action) => {
-    //     state.isLoading = false
-    //     state.isSuccess = true
-    //     state.goals.push(action.payload)
-    //   })
-    //   .addCase(createGoal.rejected, (state, action) => {
-    //     state.isLoading = false
-    //     state.isError = true
-    //     state.message = action.payload
-    //   })
+      .addCase(addMahasiswa.pending, (state) => {
+        state.mahasiswaIsLoading = true
+      })
+      .addCase(addMahasiswa.fulfilled, (state, action) => {
+        state.mahasiswaIsLoading = false
+        state.mahasiswaIsSuccess = true
+        state.mahasiswa.push(action.payload)
+      })
+      .addCase(addMahasiswa.rejected, (state, action) => {
+        state.mahasiswaIsLoading= false
+        state.mahasiswaIsError = true
+        state.mahasiswaMessage = action.payload
+      })
       .addCase(getMahasiswa.pending, (state) => {
         state.mahasiswaIsLoading = true
       })

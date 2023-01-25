@@ -11,6 +11,7 @@ import { useEffect } from 'react'
 import {Modal} from 'react-responsive-modal'
 import { getMahasiswa,mahasiswaReset } from '../features/mahasiswa/mahasiswaSlice'
 import { getUser, userReset, deleteUser } from '../features/user/userSlice'
+import { logout } from '../features/auth/authSlice';
 const Dashboard = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -71,6 +72,7 @@ const Dashboard = () => {
         }
 
         if (!user) {
+        logout()
         navigate('/')
         }
 
@@ -225,7 +227,7 @@ const Dashboard = () => {
             <Modal open={openUserDetail} onClose={handleUserModalClose} center classNames={{
                 modal: "w-1/4 overflow-x-hidden"
             }}>
-                 <table className='w-full'>
+                <table className='w-full'>
                     <tr>
                     <td className='pl-4 py-2'>Username</td>
                     <td className='py-2'>:</td>

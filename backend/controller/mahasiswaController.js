@@ -35,7 +35,8 @@ const getAllMahasiswa = asyncHandler(async (req,res) => {
 
 const addMahasiswa = asyncHandler( async (req,res) => {
     const {name,prodi,nim,alamat,gol_darah,jenis_kelamin} = req.body;
-    
+    console.log(req.body)
+    console.log(req.file)
     if(!name || !prodi || !nim || !alamat) {
         res.status(400).json({
             statusCode: 400,
