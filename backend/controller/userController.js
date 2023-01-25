@@ -27,19 +27,6 @@ const getAllUser = asyncHandler( async (req,res) => {
     })
 })
 
-const deleteUser = asyncHandler(async (req,res) => {
-    const authorizeUser = req.user.id;
-    const user = await userModel.findById(authorizeUser)
-    if(authorizeUser && user.role === "admin"){
-        const target = req.body;
-        await userModel.findByIdAndDelete(target)
-        res.status(200).json({
-            statusCode: 200,
-            message: "Data has been successfully deleted"
-        })
-    }
-})
-
 const register = asyncHandler( async (req,res) => {
     const {name,username,email,password} = req.body;
 

@@ -1,7 +1,9 @@
 import React,{useState} from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import InputForm from '../components/InputForm'
 import Button from '../components/Button'
+import { logout } from '../features/auth/authSlice'
+import { useDispatch } from 'react-redux'
 import logo from "../assets/logo-uho.png"
 const AddMahasiswa = () => {
     const [formData,setFormData] = useState({
@@ -15,8 +17,8 @@ const AddMahasiswa = () => {
     })
 
     const {name,nim,prodi,alamat,pas_foto,jenis_kelamin,gol_darah} = formData
-    // const dispatch = useDispatch()
-    // const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const onChange = (e) => {
         setFormData((prev) => ({
@@ -77,7 +79,7 @@ const AddMahasiswa = () => {
                     </label> 
                     <InputForm id='pas_foto' type='file' name='pas_foto' placeholder="Pas Foto" label="Pas Foto" value={pas_foto} onChange={onChange}/>
                     <Button text="Add Mahasiswa" type="Submit"/>
-            {/* <Button text="Logout" onClick={() => {dispatch(logout()); navigate('/')}} className="mx-auto"/> */}
+            <Button text="Logout" onClick={() => {dispatch(logout()); navigate('/')}} className="mx-auto"/>
                     </form>
                 </div>
             </div>

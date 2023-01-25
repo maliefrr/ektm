@@ -33,20 +33,11 @@ const Dashboard = () => {
     const {user} = useSelector((state) => state.auth)
     const {mahasiswa,mahasiswaIsError,mahasiswaIsLoading,mahasiswaMessage} = useSelector((state) => state.mahasiswa)
     const {users,userIsError,userIsLoading,userMessage} = useSelector((state) => state.user)
-<<<<<<< HEAD
-
-    console.log(users)
-=======
->>>>>>> 9460a03089ca131875e4185172c6cd555f279025
     const handleDeleteMahasiswa = (id) => {
         console.log(id)
     }
     
 
-<<<<<<< HEAD
-    const handleDeleteUser = (id) => {
-        console.log(id)
-=======
     const handleMahasiswaModalClose = () => {
         setOpenMahasiswaDetail(false)
         setMahasiswaDetail({
@@ -67,7 +58,6 @@ const Dashboard = () => {
             email: "",
             role: ""
         })
->>>>>>> 9460a03089ca131875e4185172c6cd555f279025
     }
 
     useEffect(() => {
