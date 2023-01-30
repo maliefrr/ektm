@@ -57,7 +57,7 @@ const addMahasiswa = asyncHandler( async (req,res) => {
             const createdUser = await userModel.create({
                 username: data.nim,
                 email: `${nim}@uho.ac.id`,
-                password: await bcrypt.hash(nim,salt),
+                password: await bcrypt.hash(data.nim,salt),
                 role: "mahasiswa",
                 name
             })
@@ -85,7 +85,7 @@ const addMahasiswa = asyncHandler( async (req,res) => {
             res.status(200).json({
                 statusCode: 200,
                 message: "Success",
-                data
+                data,
             })
         }
     }
