@@ -1,9 +1,9 @@
 import React from 'react'
 import {useState} from 'react'
-import { useDispatch} from 'react-redux'
+import { useDispatch, useSelector} from 'react-redux'
 import {logout,reset} from "../features/auth/authSlice"
-import { mahasiswaReset } from '../features/mahasiswa/mahasiswaSlice'
-import { userReset } from '../features/user/userSlice'
+import {userReset} from "../features/user/userSlice"
+import {mahasiswaReset} from "../features/mahasiswa/mahasiswaSlice"
 import Button from './Button'
 import {useNavigate,Link} from "react-router-dom"
 const SideBar = (props) => {
@@ -12,11 +12,12 @@ const SideBar = (props) => {
     const navigate = useNavigate()
     const onLogout = async () => {
         await dispatch(reset())
-        await dispatch(mahasiswaReset())
         await dispatch(userReset())
+        await dispatch(mahasiswaReset())
         await dispatch(logout())
         navigate("/")
     }
+    const {user} = useSelector((state) => state.auth)
     return (
     <>
     <button className="block md:hidden p-2 text-gray-800 hover:text-gray-700" onClick={() => setMenuOpen(!menuOpen)} style={{position: "absolute",
@@ -49,12 +50,16 @@ const SideBar = (props) => {
                         <li className='py-2 px-6'>
                             <Link to={"/dashboard"} className="block text-white hover:bg-gray-700 rounded-full py-1 px-3">Home</Link>
                         </li>
-                        <li className='py-2 px-6'>
-                            <Link to={"/dashboard/users"} className="block text-white hover:bg-gray-700 rounded-full py-1 px-3">Users</Link>
-                        </li>
-                        <li className='py-2 px-6'>
-                            <Link to={"/dashboard/mahasiswa"} className="block text-white hover:bg-gray-700 rounded-full py-1 px-3">Mahasiswa</Link>
-                        </li>
+                        {user.data.role === "admin" ? (
+                        <>
+                            <li className='py-2 px-6'>
+                                <Link to={"/dashboard/users"} className="block text-white hover:bg-gray-700 rounded-full py-1 px-3">Users</Link>
+                            </li>
+                            <li className='py-2 px-6'>
+                                <Link to={"/dashboard/mahasiswa"} className="block text-white hover:bg-gray-700 rounded-full py-1 px-3">Mahasiswa</Link>
+                            </li>
+                        </>
+                        ) : ""}
                         <li className='py-2 px-6'>
                             <Button text="Logout" onClick={onLogout} className="mx-auto"/>
                         </li>
