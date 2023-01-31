@@ -10,7 +10,7 @@ import { useEffect } from 'react'
 import {Modal} from 'react-responsive-modal'
 import { getMahasiswa,mahasiswaReset } from '../features/mahasiswa/mahasiswaSlice'
 import { getUser, userReset, deleteUser } from '../features/user/userSlice'
-import { logout } from '../features/auth/authSlice';
+// import { logout } from '../features/auth/authSlice';
 const Dashboard = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -71,7 +71,6 @@ const Dashboard = () => {
         }
 
         if (!user) {
-        logout()
         navigate('/')
         }
 
@@ -82,7 +81,6 @@ const Dashboard = () => {
         dispatch(userReset())
         }
     }, [user, navigate, mahasiswaIsError, mahasiswaMessage, dispatch,userIsError,userMessage])
-    console.log(userMessage)
     if(mahasiswaIsLoading || userIsLoading){
         return <div className='loadingSpinnerContainer'>
             <RotatingLines

@@ -2,15 +2,19 @@ import React from 'react'
 import {useState} from 'react'
 import { useDispatch} from 'react-redux'
 import {logout,reset} from "../features/auth/authSlice"
+import { mahasiswaReset } from '../features/mahasiswa/mahasiswaSlice'
+import { userReset } from '../features/user/userSlice'
 import Button from './Button'
 import {useNavigate,Link} from "react-router-dom"
 const SideBar = (props) => {
     const [menuOpen, setMenuOpen] = useState(false);
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const onLogout = () => {
-        dispatch(logout())
-        dispatch(reset())
+    const onLogout = async () => {
+        await dispatch(reset())
+        await dispatch(mahasiswaReset())
+        await dispatch(userReset())
+        await dispatch(logout())
         navigate("/")
     }
     return (

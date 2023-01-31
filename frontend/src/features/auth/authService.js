@@ -22,9 +22,9 @@ const login = async (userData) => {
     if(response) {
         localStorage.setItem("user",JSON.stringify(response.data))
     }
-
     return response.data
 }
+
 
 // logout
 const logout = () => {

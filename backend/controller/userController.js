@@ -88,6 +88,7 @@ const login = asyncHandler( async (req,res) => {
                 data: {
                     username: user.username,
                     email: user.email,
+                    role: user.role,
                     token: getToken(user.id)
                 }
             })
