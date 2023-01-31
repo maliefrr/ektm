@@ -59,7 +59,6 @@ if(userIsLoading){
   return (
     <>
         <div className="flex flex-col h-screen bg-gray-100">
-            <SideBar />
             <div className='flex-1 h-full'>
                 <div className="bg-gray-100 p-4 overflow-y-scroll overflow-x-hidden w-screen">
                     <div className='my-2'>

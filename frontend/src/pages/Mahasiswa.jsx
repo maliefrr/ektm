@@ -64,7 +64,6 @@ const Mahasiswa = () => {
     return (
         <>
             <div className="flex flex-col h-screen bg-gray-100">
-                <SideBar />
                 <div className='flex-1 h-full'>
                     <div className="bg-gray-100 p-4 overflow-x-hidden">
                         <div className='my-2'>

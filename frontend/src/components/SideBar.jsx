@@ -41,7 +41,7 @@ const SideBar = (props) => {
                     }}>
                     <div className="py-4 px-6 text-white">
                         <h1 className="text-3xl font-bold mb-2">Dashboard</h1>
-                        <p className="text-gray-500">Welcome Back!!</p>
+                        <p className="text-gray-500">Welcome Back!! {user.data.username}</p>
                     </div>
                     <ul className="list-none p-0">
                         <li className='py-2 px-6'>
