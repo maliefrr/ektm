@@ -7,6 +7,7 @@ import { useEffect } from 'react'
 import Mahasiswa from '../components/Mahasiswa';
 import User from '../components/User'
 import { logout } from '../features/auth/authSlice';
+import QRGenerator from '../components/QRGenerator'
 const Dashboard = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -48,7 +49,7 @@ const Dashboard = () => {
                             <div className="flex h-48">
                                 <div className="w-1/3 px-6 py-4">
                                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUsj6MqlO3g3EqO-cCVE7hAPbFDgNwjMwgpg&usqp=CAU" alt="profile pic" className="w-48 h-24 object-cover" />
-                                <img src="https://cdn.britannica.com/17/155017-050-9AC96FC8/Example-QR-code.jpg" alt="qr" className="w-48 object-contain" />
+                                <QRGenerator size="72" className="mt-1"/>
                                 </div>
                                 <div className="w-2/3 px-6 py-4">
                                 <div className="font-bold text-xl mb-2">{user.data.username}</div>
