@@ -91,7 +91,29 @@ const addMahasiswa = asyncHandler( async (req,res) => {
     }
 })
 
+const getMahasiswaDetail = asyncHandler(async (req,res) => {
+    try {
+        const mahasiswa = await mahasiswaModel.findOne({nim: req.params.username});
+        if(!mahasiswa){
+            return res.status(404).json({
+                statusCode: 404,
+                message: "Mahasiswa not found"
+            })
+        } else {
+            return res.status(200).json({
+                statusCode: 200,
+                mahasiswa
+            })
+        }
+    } catch (error) {
+        res.status(500).json({
+            statusCode: 500,
+            message: "Internal Server Error"
+        })
+    }
+})
+
 
 module.exports = {
-    addMahasiswa, getAllMahasiswa
+    addMahasiswa, getAllMahasiswa, getMahasiswaDetail
 }
