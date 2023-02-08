@@ -25,9 +25,14 @@ const addMahasiswa = async (mahasiswaData) => {
     return response.data.data
 }
 
+const getMahasiswaDetail = async(authUser) => {
+    const response = await axios.get(`${API_URL}/profile/${authUser}`)
+
+    return response.data.mahasiswa
+}
 
 const mahasiswaService = {
-    getMahasiswaData,addMahasiswa
+    getMahasiswaData,addMahasiswa,getMahasiswaDetail
 }
 
 export default mahasiswaService

@@ -47,6 +47,22 @@ export const getMahasiswa = createAsyncThunk(
   }
 )
 
+// get mahasiswa detail
+
+export const getMahasiswaDetail = createAsyncThunk(
+  'mahasiswa/detail',
+  async (_, { rejectWithValue }, {username}) => {
+    try {
+      return await mahasiswaService.getMahasiswaDetail(username)
+    } catch (error) {
+      const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+      return rejectWithValue(message)
+    }
+  }
+)
+
+
+
 // Delete user goal
 // export const deleteGoal = createAsyncThunk(
 //   'goals/delete',
@@ -96,6 +112,19 @@ export const mahasiswaSlice = createSlice({
         state.mahasiswa = action.payload
       })
       .addCase(getMahasiswa.rejected, (state, action) => {
+        state.mahasiswaIsLoading = false
+        state.mahasiswaIsError = true
+        state.mahasiswaMessage = action.payload
+      })
+      .addCase(getMahasiswaDetail.fulfilled, (state,action) => {
+        state.mahasiswaIsLoading = false
+        state.mahasiswaIsSuccess = true
+        state.mahasiswa = action.payload
+      })
+      .addCase(getMahasiswaDetail.pending, (state) => {
+        state.mahasiswaIsLoading = true
+      })
+      .addCase(getMahasiswaDetail.rejected,(state,action) => {
         state.mahasiswaIsLoading = false
         state.mahasiswaIsError = true
         state.mahasiswaMessage = action.payload

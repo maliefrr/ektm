@@ -1,18 +1,20 @@
 import React from 'react'
 import SideBar from '../components/SideBar'
 import logo from "../assets/logo-uho.png"
+import Mahasiswa from '../components/Mahasiswa';
+import User from '../components/User'
+import QRGenerator from '../components/QRGenerator'
+import { getMahasiswaDetail } from '../features/mahasiswa/mahasiswaSlice';
 import { useDispatch, useSelector } from 'react-redux'
 import {useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
-import Mahasiswa from '../components/Mahasiswa';
-import User from '../components/User'
 import { logout } from '../features/auth/authSlice';
-import QRGenerator from '../components/QRGenerator'
 const Dashboard = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
     const {user} = useSelector((state) => state.auth)
+    const {mahasiswa} = useSelector((state) => state.mahasiswa)
 
     useEffect(() => {
 
@@ -20,9 +22,9 @@ const Dashboard = () => {
             logout()
             navigate('/')
         }
+        dispatch(getMahasiswaDetail({username: user.data.username}))
     }, [user, navigate, dispatch])
-
-
+    console.log(mahasiswa)
     return (
         <>
             <div className="flex flex-col h-screen bg-gray-100">
