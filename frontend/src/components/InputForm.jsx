@@ -14,6 +14,7 @@ const InputForm = (props) => {
                 name={props.name}
                 value={props.value}
                 onChange={props.onChange}
+                disabled={props.disable}
             />
         </label> 
     </div>

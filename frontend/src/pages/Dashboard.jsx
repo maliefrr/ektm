@@ -4,18 +4,13 @@ import logo from "../assets/logo-uho.png"
 import Mahasiswa from '../components/Mahasiswa';
 import User from '../components/User'
 import QRGenerator from '../components/QRGenerator'
-import { getMahasiswaDetail } from '../features/mahasiswa/mahasiswaSlice';
 import { useDispatch, useSelector } from 'react-redux'
 import {useNavigate } from 'react-router-dom'
 import {toast} from "react-toastify"
 import { useEffect } from 'react'
-import Mahasiswa from '../components/Mahasiswa';
 import { RotatingLines } from  'react-loader-spinner'
 import axios from 'axios'
-import User from '../components/User'
 import { logout } from '../features/auth/authSlice';
-// import { getMahasiswaDetail,mahasiswaReset } from '../features/mahasiswa/mahasiswaSlice'
-import QRGenerator from '../components/QRGenerator'
 const Dashboard = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -23,7 +18,7 @@ const Dashboard = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
     const {user} = useSelector((state) => state.auth)
-    const {mahasiswa,mahasiswaIsError,mahasiswaIsLoading,mahasiswaMessage} = useSelector((state) => state.mahasiswa)
+    const {mahasiswaIsError,mahasiswaMessage} = useSelector((state) => state.mahasiswa)
     useEffect(() => {
         if (mahasiswaIsError) {
         toast.error(mahasiswaMessage)
@@ -44,12 +39,9 @@ const Dashboard = () => {
             setIsLoading(false);
         }
         };
-
-        fetchData()
-        // dispatch(getMahasiswaDetail({username : user.data.username}))
-        // return () => {
-        // dispatch(mahasiswaReset())
-        // }
+        if(user.data.role === "mahasiswa"){
+            fetchData()
+        }
     }, [user, navigate, mahasiswaIsError, mahasiswaMessage, dispatch])
     if (error) {
         toast.error(`An error occurred: ${error.message}`)
@@ -65,7 +57,6 @@ const Dashboard = () => {
             />
         </div>
     }
-    console.log(data)
     return (
         <>
             <div className="flex flex-col h-screen bg-gray-100">
@@ -86,7 +77,7 @@ const Dashboard = () => {
                                     <h2 className="font-medium text-lg">
                                     Universitas Halu Oleo
                                     </h2>
-                                    <p><a href="https://www.uho.ac.id/" target="_blank">www.uho.ac.id</a></p>
+                                    <p><a href="https://www.uho.ac.id/" target="_blank" rel="noreferrer noopener">www.uho.ac.id</a></p>
                                 </div>
                                 <img
                                 src={logo}
