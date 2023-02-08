@@ -1,5 +1,4 @@
 import React, {useState} from 'react'
-import SideBar from '../components/SideBar'
 import {Modal} from 'react-responsive-modal'
 import {toast} from "react-toastify"
 import { Link, useNavigate } from 'react-router-dom'
