@@ -41,6 +41,10 @@ const Profile = () => {
             />
         </div>
     }
+    const {name,prodi,nim,gol_darah,jenis_kelamin} = data
+  const handleChange = event => {
+    setData({ ...data, [event.target.name]: event.target.value });
+  };
   return (
     <div className="flex h-screen">
         <SideBar/>
@@ -49,17 +53,17 @@ const Profile = () => {
             <h1 className="text-2xl font-medium">Profile</h1>
             {user.data.role === "mahasiswa" ? (
               <>
-                <img src={data.pas_foto} alt={`Profile ${data.name}`} className="w-52 h-52 rounded-md object-cover mx-auto"/>
+                <img src={data.pas_foto} alt={`Profile ${name}`} className="w-52 h-52 rounded-md object-cover mx-auto"/>
                 <hr className=' border-2 border-black my-3'/>
                 <div className="flex justify-end">
                   <Button className="" text="Edit" onClick={() => setEdit(!edit)}/>
                 </div>
-                <InputForm id='nama' type='text' name='name' placeholder="Nama" label="Nama" value={data.name} disable={edit} class="mb-2"/>
-                <InputForm id='nim' type='text' name='nim' placeholder="Nomor Induk Mahasiswa" label="Nomor Induk Mahasiswa" value={data.nim} disable={edit} class="mb-2"/>
-                <InputForm id='prodi' type='text' name='prodi' placeholder="Program Studi" label="Program Studi" value={data.prodi} disable={edit} class="mb-2"/>
+                <InputForm id='nama' type='text' name='name' placeholder="Nama" label="Nama" value={name} disable={edit} class="mb-2" onChange={handleChange}/>
+                <InputForm id='nim' type='text' name='nim' placeholder="Nomor Induk Mahasiswa" label="Nomor Induk Mahasiswa" value={nim} disable={edit} class="mb-2" onChange={handleChange}/>
+                <InputForm id='prodi' type='text' name='prodi' placeholder="Program Studi" label="Program Studi" value={prodi} disable={edit} class="mb-2" onChange={handleChange}/>
                 <InputForm id='email' type='email' name='email' placeholder="Email" label="Email" value={user.data.email} disable={edit} class="mb-2"/>
-                <InputForm id='gol_darah' type='text' name='gol_darah' placeholder="Golongan Darah" label="Golongan Darah" value={data.gol_darah} disable={edit} class="mb-2"/>
-                <InputForm id='jenis_kelamin' type='text' name='jenis_kelamin' placeholder="Jenis Kelamin" label="Jenis Kelamin" value={data.jenis_kelamin} disable={edit} class="mb-2"/>
+                <InputForm id='gol_darah' type='text' name='gol_darah' placeholder="Golongan Darah" label="Golongan Darah" value={gol_darah} disable={edit} class="mb-2" onChange={handleChange}/>
+                <InputForm id='jenis_kelamin' type='text' name='jenis_kelamin' placeholder="Jenis Kelamin" label="Jenis Kelamin" value={jenis_kelamin} disable={edit} class="mb-2" onChange={handleChange}/>
               </>
             ) : ""}
           </div>
