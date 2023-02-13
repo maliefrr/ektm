@@ -13,7 +13,8 @@ const Profile = () => {
     prodi : "",
     nim : "",
     gol_darah : "",
-    jenis_kelamin : ""
+    jenis_kelamin : "",
+    pas_foto: ""
   });
   const {user} = useSelector((state) => state.auth)
   const [isLoading, setIsLoading] = useState(false);
@@ -30,6 +31,7 @@ const Profile = () => {
             nim: response.data.mahasiswa.nim,
             gol_darah: response.data.mahasiswa.gol_darah,
             jenis_kelamin: response.data.mahasiswa.jenis_kelamin,
+            pas_foto: response.data.mahasiswa.pas_foto
           });
       } catch (err) {
           setError(err);
@@ -53,13 +55,23 @@ const Profile = () => {
             />
         </div>
     }
-    const {name,prodi,nim,gol_darah,jenis_kelamin} = data
+    const {name,prodi,nim,gol_darah,jenis_kelamin,pas_foto} = data
   const handleChange = event => {
     setData({ ...data, [event.target.name]: event.target.value });
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(data);
+    const response = await axios.put(`http://localhost:5000/api/mahasiswa/edit/${user.data.username}`,{
+      name,
+      prodi,
+      gol_darah,
+      jenis_kelamin
+    })
+    if(response.status !== 500){
+      toast.success(response.data.message)
+    } else {
+      toast.error(response.data.message)
+    }
   };
   return (
     <div className="flex h-screen">
@@ -69,7 +81,7 @@ const Profile = () => {
             <h1 className="text-2xl font-medium">Profile</h1>
             {user.data.role === "mahasiswa" ? (
               <>
-                <img src={data.pas_foto} alt={`Profile ${name}`} className="w-52 h-52 rounded-md object-cover mx-auto"/>
+                <img src={`${pas_foto}`} alt={`Profile ${name}`} className="w-52 h-52 rounded-md object-cover mx-auto"/>
                 <hr className=' border-2 border-black my-3'/>
                 <h1 className="text-center font-bold text-2xl">Informasi Akun</h1>
                 <div className="flex justify-end">
@@ -111,8 +123,8 @@ const Profile = () => {
                         <option value="Wanita">P</option>
                     </select>
                     </label> 
-                    <div className="flex mx-auto mb-2">
-                      <Button className="" text="Submit"/>
+                    <div className="flex mx-auto mb-2 w-full">
+                      <Button class="mx-auto" text="Submit"/>
                     </div>
                 </form>
               </>

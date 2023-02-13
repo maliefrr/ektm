@@ -113,7 +113,25 @@ const getMahasiswaDetail = asyncHandler(async (req,res) => {
     }
 })
 
+const editMahasiswa = asyncHandler(async (req,res) => {
+    try {
+        const {name,prodi,nim,gol_darah,jenis_kelamin} = req.body
+        const user = await mahasiswaModel.findOneAndUpdate({nim : req.params.username},{
+            name,prodi,nim,gol_darah,jenis_kelamin
+        })
+        res.status(200).json({
+            statusCode: 200,
+            message: "The data has been successfully updated",
+            data: user
+        })
+    } catch (error) {
+        res.status(500).json({
+            statusCode: 500,
+            message: "Internal Server Error"
+        })
+    }
+})
 
 module.exports = {
-    addMahasiswa, getAllMahasiswa, getMahasiswaDetail
+    addMahasiswa, getAllMahasiswa, getMahasiswaDetail,editMahasiswa
 }
