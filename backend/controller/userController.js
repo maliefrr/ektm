@@ -62,6 +62,27 @@ const register = asyncHandler( async (req,res) => {
     }
 })
 
+const editProfileUser = asyncHandler(async (req,res) => {
+    try {
+        const {email} = req.body
+        const data = await userModel.findOneAndUpdate({username : req.params.username},{
+            email
+        })
+        res.status(200).json({
+            statusCode: 200,
+            message: "The data has been successfully updated",
+            data: {
+                email: data.email
+            }
+        })
+    } catch (error) {
+        res.status(500).json({
+            statusCode: 500,
+            message: "Internal Server Error"
+        })
+    }
+})
+
 const deleteUser = async (req,res) => {
     const data = await userModel.findByIdAndDelete(req.params.id);
     res.status(200).json({
@@ -108,5 +129,5 @@ const getToken = (id) => {
 }
 
 module.exports = {
-    getAllUser,register,login,deleteUser
+    getAllUser,register,login,deleteUser,editProfileUser
 }
