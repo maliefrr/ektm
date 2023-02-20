@@ -31,8 +31,16 @@ const logout = () => {
     localStorage.removeItem("user")
 }
 
+const updateEmail = async (username,email) => {
+    const response = await axios.put(`${API_URL}/edit/${username}`, {
+            email
+        })
+    console.log(response.data.data)
+    return response.data.data
+}
+
 const authService = {
-    login,logout,register
+    login,logout,register,updateEmail
 }
 
 export default authService

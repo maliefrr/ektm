@@ -36,6 +36,19 @@ export const login = createAsyncThunk(
     }
 )
 
+export const updateEmail = createAsyncThunk(
+    'auth/updateEmail',
+    async ({ username, email },thunkAPI) => {
+        try {
+            return await authService.updateEmail(username,email)
+        } catch (error) {
+            const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+            return thunkAPI.rejectWithValue(message)            
+        }
+    }
+)
+
+
 export const logout = createAsyncThunk(
     "auth/logout", async () => {
         await authService.logout()
@@ -86,6 +99,14 @@ export const authSlice = createSlice({
             .addCase(register.pending, (state) => {
                 state.isLoading = true
             })
+            .addCase(updateEmail.fulfilled, (state, action) => {
+                console.log(state)
+                    state.user.data.email = action.payload
+            })
+            .addCase(updateEmail.pending, (state) => {
+                state.isLoading = true;
+            })
+
     }
 })
 

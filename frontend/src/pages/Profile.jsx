@@ -1,11 +1,12 @@
 import axios from 'axios'
 import React, {useState, useEffect} from 'react'
 import SideBar from '../components/SideBar'
-import {useSelector} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import {toast} from "react-toastify"
 import { RotatingLines } from  'react-loader-spinner'
 import Button from '../components/Button'
 import InputForm from '../components/InputForm'
+import { updateEmail } from '../features/auth/authSlice'
 
 const Profile = () => {
   const [data, setData] = useState({
@@ -18,6 +19,7 @@ const Profile = () => {
     alamat: ""
   });
   const {user} = useSelector((state) => state.auth)
+  const dispatch = useDispatch()
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [editBio,setEditBio] = useState(true);
@@ -84,6 +86,16 @@ const Profile = () => {
       toast.error(response.data.message)
     }
   };
+  const handleSubmitUser = async (e) => {
+    e.preventDefault()
+    dispatch(updateEmail({username: user.data.username, email : email}))
+      .then(() => {
+        toast.success('Email updated successfully!');
+      })
+      .catch((error) => {
+        toast.error('Failed to update email:', error);
+      });
+    }
   return (
     <div className="flex h-screen">
         <SideBar/>
@@ -98,11 +110,13 @@ const Profile = () => {
                 <div className="flex justify-end">
                   <Button className="" text="Edit" onClick={() => setEditUser(!editUser)}/>
                 </div>
-                <InputForm id='text' type='text' name='username' placeholder="Username" label="Username" value={user.data.username} disable={editUser} class="mb-2"/>
-                <InputForm id='email' type='email' name='email' placeholder="Email" label="Email" value={email} disable={editUser} class="mb-2" onChange={handleChangeUser}/>
-                <div className="flex mx-auto mb-2">
-                  <Button className="" text="Submit"/>
-                </div>
+                <form onSubmit={handleSubmitUser}>
+                    <InputForm id='text' type='text' name='username' placeholder="Username" label="Username" value={user.data.username} disable={editUser} class="mb-2"/>
+                    <InputForm id='email' type='email' name='email' placeholder="Email" label="Email" value={email} disable={editUser} class="mb-2" onChange={handleChangeUser}/>
+                    <div className="flex mx-auto mb-2">
+                      <Button className="" text="Submit"/>
+                    </div>
+                </form>
                 <h1 className="text-center font-bold text-2xl mt-5">Biodata</h1>
                 <div className="flex justify-end">
                   <Button className="" text="Edit" onClick={() => setEditBio(!editBio)}/>
