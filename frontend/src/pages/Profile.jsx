@@ -23,13 +23,17 @@ const Profile = () => {
   const [editBio,setEditBio] = useState(true);
   const [editUser,setEditUser] = useState(true);
   const [dataUser, setDataUser] = useState({
-    email : user.data.email,
+    email : "",
+    username : "",
+    name : "",
+    role : "",
   });
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
           const response = await axios.get(`http://localhost:5000/api/mahasiswa/profile/${user.data.username}`);
+          const responseUser = await axios.get(`http://localhost:5000/api/users/profile/${user.data.username}`)
           setData({
             name: response.data.mahasiswa.name,
             prodi: response.data.mahasiswa.prodi,
@@ -39,6 +43,12 @@ const Profile = () => {
             pas_foto: response.data.mahasiswa.pas_foto,
             alamat: response.data.mahasiswa.alamat
           });
+          setDataUser({
+            name: responseUser.data.data.name,
+            username: responseUser.data.data.username,
+            role: responseUser.data.data.role,
+            email: responseUser.data.data.email
+          })
       } catch (err) {
           setError(err);
       } finally {
@@ -62,7 +72,8 @@ const Profile = () => {
         </div>
     }
     const {name,prodi,nim,gol_darah,jenis_kelamin,pas_foto,alamat} = data
-    const {email} = dataUser
+    const {email,username} = dataUser
+    console.log(dataUser)
   const handleChange = event => {
     setData({ ...data, [event.target.name]: event.target.value });
   };
@@ -71,17 +82,28 @@ const Profile = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await axios.put(`http://localhost:5000/api/mahasiswa/edit/${user.data.username}`,{
-      name,
-      prodi,
-      gol_darah,
-      jenis_kelamin,
-      alamat
-    })
-    if(response.status !== 500){
+    try {
+      const response = await axios.put(`http://localhost:5000/api/mahasiswa/edit/${user.data.username}`,{
+        name,
+        prodi,
+        gol_darah,
+        jenis_kelamin,
+        alamat
+      })
       toast.success(response.data.message)
-    } else {
-      toast.error(response.data.message)
+    } catch (error) {
+      toast.error(error)
+    }
+  };
+  const handleSubmitUser = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.put(`http://localhost:5000/api/users/edit/${user.data.username}`,{
+        email
+      })
+      toast.success(response.data.message)
+    } catch (error) {
+      toast.error(error)
     }
   };
   return (
@@ -98,11 +120,13 @@ const Profile = () => {
                 <div className="flex justify-end">
                   <Button className="" text="Edit" onClick={() => setEditUser(!editUser)}/>
                 </div>
-                <InputForm id='text' type='text' name='username' placeholder="Username" label="Username" value={user.data.username} disable={editUser} class="mb-2"/>
-                <InputForm id='email' type='email' name='email' placeholder="Email" label="Email" value={email} disable={editUser} class="mb-2" onChange={handleChangeUser}/>
-                <div className="flex mx-auto mb-2">
-                  <Button className="" text="Submit"/>
-                </div>
+                <form onSubmit={handleSubmitUser}>
+                  <InputForm id='text' type='text' name='username' placeholder="Username" label="Username" value={username} disable={editUser} class="mb-2"/>
+                  <InputForm id='email' type='email' name='email' placeholder="Email" label="Email" value={email} disable={editUser} class="mb-2" onChange={handleChangeUser}/>
+                  <div className="flex mx-auto mb-2">
+                    <Button class="mx-auto" text="Submit"/>
+                  </div>
+                </form>
                 <h1 className="text-center font-bold text-2xl mt-5">Biodata</h1>
                 <div className="flex justify-end">
                   <Button className="" text="Edit" onClick={() => setEditBio(!editBio)}/>
