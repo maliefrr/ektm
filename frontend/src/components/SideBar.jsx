@@ -36,7 +36,6 @@ const SideBar = (props) => {
         try {
             if(password !== passwordConfirmation) {
                 toast.error("password and confirmation password did not match")
-                setOpenChangePassword(false)
                 setFormData({
                     password: "",
                     passwordConfirmation: ""
