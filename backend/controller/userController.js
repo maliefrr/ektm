@@ -2,6 +2,7 @@ const userModel = require("../models/userModel.js")
 const jwt = require("jsonwebtoken")
 const asyncHandler = require("express-async-handler")
 const bcrypt = require("bcryptjs")
+const { findOne } = require("../models/userModel.js")
 
 const getAllUser = asyncHandler( async (req,res) => {
     const authorizeUser = req.user.id;
@@ -83,6 +84,24 @@ const editProfileUser = asyncHandler(async (req,res) => {
     }
 })
 
+const getUser = asyncHandler(async (req,res) => {
+    try {
+        const username = req.params.username;
+        const data = await userModel.findOne({username: username})
+        res.status(200).json({
+            statusCode: 200,
+            data: {
+                username: data.username,
+                name: data.name,
+                email: data.email,
+                role: data.role
+            }
+        })
+    } catch (error) {
+        
+    }
+})
+
 const deleteUser = async (req,res) => {
     const data = await userModel.findByIdAndDelete(req.params.id);
     res.status(200).json({
@@ -129,5 +148,5 @@ const getToken = (id) => {
 }
 
 module.exports = {
-    getAllUser,register,login,deleteUser,editProfileUser
+    getAllUser,register,login,deleteUser,editProfileUser,getUser
 }

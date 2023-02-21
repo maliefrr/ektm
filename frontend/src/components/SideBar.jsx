@@ -61,6 +61,9 @@ const SideBar = (props) => {
                         </>
                         ) : ""}
                         <li className='py-2 px-6'>
+                            <button className="block text-white hover:bg-gray-700 rounded-full py-1 px-3 hover:w-full hover:text-left">Ganti Password</button>
+                        </li>
+                        <li className='py-2 px-6'>
                             <Button text="Logout" onClick={onLogout} className="mx-auto"/>
                         </li>
                     </ul>
