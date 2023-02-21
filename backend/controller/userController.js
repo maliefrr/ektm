@@ -84,6 +84,24 @@ const editProfileUser = asyncHandler(async (req,res) => {
     }
 })
 
+const editPassword = asyncHandler(async (req,res) => {
+    try {
+        const salt = await bcrypt.genSalt(10)
+        const password = await bcrypt.hash(req.body.password,salt)
+        await userModel.findOneAndUpdate({username: req.params.username},{
+            password
+        })
+        res.status(200).json({
+            statusCode: 200,
+            message: "Password has been successfully updated"
+        })
+    } catch (error) {
+        res.json({
+            message: error
+        })
+    }
+})
+
 const getUser = asyncHandler(async (req,res) => {
     try {
         const username = req.params.username;
@@ -148,5 +166,5 @@ const getToken = (id) => {
 }
 
 module.exports = {
-    getAllUser,register,login,deleteUser,editProfileUser,getUser
+    getAllUser,register,login,deleteUser,editProfileUser,getUser,editPassword
 }

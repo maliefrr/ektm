@@ -8,7 +8,7 @@ const InputForm = (props) => {
             <div className="text-slate-800 mb-2">{props.label}</div>
             <input
                 type={props.type}
-                className="border rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
+                className={`border rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:focus:border-red-500 invalid:focus:ring-red-500 peer`}
                 placeholder={props.placeholder}
                 id={props.id}
                 name={props.name}

@@ -1,12 +1,11 @@
 import axios from 'axios'
 import React, {useState, useEffect} from 'react'
 import SideBar from '../components/SideBar'
-import {useDispatch, useSelector} from 'react-redux'
+import {useSelector} from 'react-redux'
 import {toast} from "react-toastify"
 import { RotatingLines } from  'react-loader-spinner'
 import Button from '../components/Button'
 import InputForm from '../components/InputForm'
-import { updateEmail } from '../features/auth/authSlice'
 
 const Profile = () => {
   const [data, setData] = useState({
@@ -19,7 +18,6 @@ const Profile = () => {
     alamat: ""
   });
   const {user} = useSelector((state) => state.auth)
-  const dispatch = useDispatch()
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [editBio,setEditBio] = useState(true);
@@ -75,7 +73,6 @@ const Profile = () => {
     }
     const {name,prodi,nim,gol_darah,jenis_kelamin,pas_foto,alamat} = data
     const {email,username} = dataUser
-    console.log(dataUser)
   const handleChange = event => {
     setData({ ...data, [event.target.name]: event.target.value });
   };
@@ -169,6 +166,7 @@ const Profile = () => {
             ) : ""}
           </div>
         </div>
+
     </div>
 );
 }

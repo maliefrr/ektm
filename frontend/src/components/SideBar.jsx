@@ -4,10 +4,19 @@ import { useDispatch, useSelector} from 'react-redux'
 import {logout,reset} from "../features/auth/authSlice"
 import {userReset} from "../features/user/userSlice"
 import {mahasiswaReset} from "../features/mahasiswa/mahasiswaSlice"
+import {toast} from "react-toastify"
 import Button from './Button'
+import Modal from 'react-responsive-modal'
+import InputForm from './InputForm'
+import axios from "axios"
 import {useNavigate,Link} from "react-router-dom"
 const SideBar = (props) => {
     const [menuOpen, setMenuOpen] = useState(false);
+    const [openChangePassword,setOpenChangePassword] = useState(false)
+    const [formData,setFormData] = useState({
+        password : "",
+        passwordConfirmation: ""
+    }) 
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const onLogout = async () => {
@@ -17,7 +26,41 @@ const SideBar = (props) => {
         await dispatch(logout())
         navigate("/")
     }
+    const {password,passwordConfirmation} = formData
     const {user} = useSelector((state) => state.auth)
+    const handleChange = event => {
+    setFormData({ ...formData, [event.target.name]: event.target.value });
+    };
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        try {
+            if(password !== passwordConfirmation) {
+                toast.error("password and confirmation password did not match")
+                setOpenChangePassword(false)
+                setFormData({
+                    password: "",
+                    passwordConfirmation: ""
+                })
+            } else {
+                const response = await axios.put(`http://localhost:5000/api/users/edit/password/${user.data.username}`,{
+                    password
+                })
+                toast.success(response.data.message)
+                setOpenChangePassword(false)
+                setFormData({
+                    password: "",
+                    passwordConfirmation: ""
+                })
+            }
+        } catch (error) {
+            toast.error(error)
+            setOpenChangePassword(false)
+                setFormData({
+                    password: "",
+                    passwordConfirmation: ""
+                })
+        }
+    }
     return (
     <>
     <button className="block md:hidden p-2 text-gray-800 hover:text-gray-700" onClick={() => setMenuOpen(!menuOpen)} style={{position: "absolute",
@@ -61,13 +104,21 @@ const SideBar = (props) => {
                         </>
                         ) : ""}
                         <li className='py-2 px-6'>
-                            <button className="block text-white hover:bg-gray-700 rounded-full py-1 px-3 hover:w-full hover:text-left">Ganti Password</button>
+                            <button className="block text-white hover:bg-gray-700 rounded-full py-1 px-3 hover:w-full hover:text-left" onClick={() => setOpenChangePassword(!openChangePassword)}>Ganti Password</button>
                         </li>
                         <li className='py-2 px-6'>
                             <Button text="Logout" onClick={onLogout} className="mx-auto"/>
                         </li>
                     </ul>
                 </div>
+        <Modal center open={openChangePassword} onClose={() => setOpenChangePassword(!openChangePassword)} classNames={{modal: "w-1/3"}}>
+            <h1 className='text-xl mt-4 mb-2 text-center'>Ganti Password</h1>
+            <form onSubmit={handleSubmit}>
+                <InputForm id='password' type='password' name='password' placeholder="New Password" label="New Password" class="mb-2" value={password} onChange={handleChange}/>
+                <InputForm id='passwordConfirmation' type='password' name='passwordConfirmation' placeholder="New Password Confirmation" label="New Password Confirmation" class="mb-2" value={passwordConfirmation} onChange={handleChange}/>
+                <Button text="Submit" className="mx-auto"/>
+            </form>
+        </Modal>
     </>
     )
 }
