@@ -58,6 +58,7 @@ if(userIsLoading){
 }
   return (
     <>
+    <SideBar />
         <div className="flex flex-col h-screen bg-gray-100">
             <div className='flex-1 h-full'>
                 <div className="bg-gray-100 p-4 overflow-y-scroll overflow-x-hidden w-screen">
@@ -77,9 +78,6 @@ if(userIsLoading){
                                         <td className='px-4 py-2 border-2 border-black'>{user.username}</td>
                                         <td className='px-4 py-2 border-2 border-black'>{user.email}</td>
                                         <td className='px-4 py-2 border-2 border-black'>
-                                            <button className="px-2">
-                                                Edit
-                                            </button>
                                             <button className="px-2" onClick={() => {toast.success("data has been successfully deleted"); dispatch(deleteUser(user.id))}}>
                                                 Delete
                                             </button>

@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../features/auth/authSlice';
 import { RotatingLines } from  'react-loader-spinner'
 import { getMahasiswa,mahasiswaReset } from '../features/mahasiswa/mahasiswaSlice'
+import SideBar from '../components/SideBar'
 const Mahasiswa = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -62,6 +63,7 @@ const Mahasiswa = () => {
     }
     return (
         <>
+        <SideBar />
             <div className="flex flex-col h-screen bg-gray-100">
                 <div className='flex-1 h-full'>
                     <div className="bg-gray-100 p-4 overflow-x-hidden">
@@ -87,7 +89,7 @@ const Mahasiswa = () => {
                                             <td className='px-4 py-2 border-2 border-black'>{mahasiswa.prodi}</td>
                                             <td className='px-4 py-2 border-2 border-black'>
                                                 <button className="px-2 ">
-                                                    Edit
+                                                    Reset Password
                                                 </button>
                                                 <button className="px-2">
                                                     Delete

@@ -32,8 +32,15 @@ const Profile = () => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
+        const responseUser = await axios.get(`http://localhost:5000/api/users/profile/${user.data.username}`)
+        setDataUser({
+          name: responseUser.data.data.name,
+          username: responseUser.data.data.username,
+          role: responseUser.data.data.role,
+          email: responseUser.data.data.email
+        })
+        if(user.data.role === "mahasiswa") {
           const response = await axios.get(`http://localhost:5000/api/mahasiswa/profile/${user.data.username}`);
-          const responseUser = await axios.get(`http://localhost:5000/api/users/profile/${user.data.username}`)
           setData({
             name: response.data.mahasiswa.name,
             prodi: response.data.mahasiswa.prodi,
@@ -43,12 +50,7 @@ const Profile = () => {
             pas_foto: response.data.mahasiswa.pas_foto,
             alamat: response.data.mahasiswa.alamat
           });
-          setDataUser({
-            name: responseUser.data.data.name,
-            username: responseUser.data.data.username,
-            role: responseUser.data.data.role,
-            email: responseUser.data.data.email
-          })
+        }
       } catch (err) {
           setError(err);
       } finally {
@@ -163,7 +165,21 @@ const Profile = () => {
                     </div>
                 </form>
               </>
-            ) : ""}
+            ) : (
+              <>
+              <h1 className="text-center font-bold text-2xl">Informasi Akun</h1>
+                <div className="flex justify-end">
+                  <Button className="" text="Edit" onClick={() => setEditUser(!editUser)}/>
+                </div>
+                <form onSubmit={handleSubmitUser}>
+                  <InputForm id='text' type='text' name='username' placeholder="Username" label="Username" value={username} disable={editUser} class="mb-2"/>
+                  <InputForm id='email' type='email' name='email' placeholder="Email" label="Email" value={email} disable={editUser} class="mb-2" onChange={handleChangeUser}/>
+                  <div className="flex mx-auto mb-2">
+                    <Button class="mx-auto" text="Submit"/>
+                  </div>
+                </form>
+              </>
+            )}
           </div>
         </div>
 
