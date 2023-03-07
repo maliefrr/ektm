@@ -1,14 +1,23 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-
-const LoginPage = () => {
-
-    const [email, setEmail] = useState('');
+import axios from 'axios';
+const LoginPage = (props,{route}) => {
+    
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     
-    const handleLogin = () => {
-    // Handle login logic here
+    const handleLogin = async () => {
+        try {
+            const response = await axios.post("https://44b9-180-251-155-166.ap.ngrok.io/api/users/login",{
+                username,password
+            })
+            console.log(response.data.data)
+            console.log(response.data.message)
+            props.navigation.navigate("Dashboard")
+        } catch (error) {
+            console.log(error.message)
+        }
     };
 
     return (
@@ -18,10 +27,10 @@ const LoginPage = () => {
         <Text style={styles.title}>Kartu Tanda Mahasiswa Elektronik</Text>
         <TextInput
             style={styles.input}
-            placeholder="Email"
+            placeholder="Username"
             placeholderTextColor="#cccccc"
-            onChangeText={(text) => setEmail(text)}
-            value={email}
+            onChangeText={(text) => setUsername(text)}
+            value={username}
             autoCapitalize="none"
         />
         <TextInput

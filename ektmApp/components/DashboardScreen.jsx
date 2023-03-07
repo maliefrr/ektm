@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 
-const DashboardScreen = () => {
-
+const DashboardScreen = (props,{route}) => {
+    
     return (
         <View style={styles.container}>
         <View style={styles.profileContainer}>
