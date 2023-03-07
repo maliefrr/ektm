@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
-const loginPage = () => {
+const LoginPage = () => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -44,7 +44,6 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#f5f5f5',
     },
     logo: {
         width: 150,
@@ -91,4 +90,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default loginPage
+export default LoginPage

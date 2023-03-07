@@ -4,48 +4,31 @@
  *
  * @format
  */
+import LoginPage from "./components/LoginPage";
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { StyleSheet } from "react-native";
+import DashboardScreen from "./components/DashboardScreen";
 
-import React from 'react';
-import {
-  StyleSheet,
-  useColorScheme,
-} from 'react-native';
+// Create a stack navigator
+const Stack = createStackNavigator();
 
-import {
-  Colors,
-} from 'react-native/Libraries/NewAppScreen';
-
-import LoginPage from './components/LoginPage'
-
-function App(): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
+function App(){
   return (
-      <LoginPage />
+    <NavigationContainer style={styles.container}>
+      <Stack.Navigator>
+        <Stack.Screen name="Login" component={LoginPage} options={{headerShown : false}}/>
+        <Stack.Screen name="Dashboard" component={DashboardScreen} options={{headerShown : false}}/>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
+  container: {
+    backgroundColor: '#f5f5f5',
+  }
+})
+
 
 export default App;
