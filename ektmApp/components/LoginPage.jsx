@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import Toast from 'react-native-toast-message'
 import axios from 'axios';
 const LoginPage = (props,{route}) => {
     
@@ -9,14 +10,24 @@ const LoginPage = (props,{route}) => {
     
     const handleLogin = async () => {
         try {
-            const response = await axios.post("https://44b9-180-251-155-166.ap.ngrok.io/api/users/login",{
+            const response = await axios.post("https://da6b-180-251-148-65.ap.ngrok.io/api/users/login",{
                 username,password
             })
-            console.log(response.data.data)
-            console.log(response.data.message)
-            props.navigation.navigate("Dashboard")
+            const mahasiswaData = await axios.get(`https://da6b-180-251-148-65.ap.ngrok.io/api/mahasiswa/profile/${response.data.data.username}`)
+            console.log(mahasiswaData.data.mahasiswa)
+            props.navigation.navigate("Dashboard",{
+                name : mahasiswaData.data.mahasiswa.name,
+                nim: mahasiswaData.data.mahasiswa.nim,
+                image: mahasiswaData.data.mahasiswa.pas_foto,
+                prodi: mahasiswaData.data.mahasiswa.prodi
+            })
         } catch (error) {
-            console.log(error.message)
+            Toast.show({
+                type: "error",
+                text1: "Error",
+                text2: error.message,
+                autoHide: true
+            })
         }
     };
 
@@ -44,6 +55,7 @@ const LoginPage = (props,{route}) => {
         <TouchableOpacity style={styles.button} onPress={handleLogin}>
             <Text style={styles.buttonTitle}>Login</Text>
         </TouchableOpacity>
+        <Toast />
     </View>
     )
 }
