@@ -6,7 +6,8 @@
   "scripts": {
     "test": "npx jest",
     "dev": "concurrently \"nodemon backend/server.js\" \"npm start --prefix frontend\"",
-    "start": "node backend/server.js"
+    "start": "node backend/server.js",
+    "build": "npm run build --prefix frontend"
   },
   "keywords": [],
   "author": "",
