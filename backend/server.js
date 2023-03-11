@@ -42,11 +42,22 @@ app.use(express.urlencoded({
 }))
 app.use(bodyParser.json())
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: ['http://localhost:3000','https://64ce-182-1-202-230.ap.ngrok.io'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
-    exposedHeaders: ['Content-Type', 'Authorization']
+    exposedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
 }));
+
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*'); // Replace with your React app's URL
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.header('Access-Control-Expose-Headers', 'Content-Type, Authorization');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  next();
+});
+
 
 // load route
 app.use("/api/users/",require("./routes/userRoute.js"))
