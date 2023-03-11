@@ -4,6 +4,7 @@ require("dotenv").config()
 const connectDB = require("./config/db.js")
 const multer = require("multer")
 const cors = require('cors');
+const path = require('path')
 const app = express()
 
 connectDB()
@@ -63,5 +64,14 @@ app.use((req, res, next) => {
 app.use("/api/users/",require("./routes/userRoute.js"))
 app.use("/api/mahasiswa/",require("./routes/mahasiswaRoute"))
 
+// cek if the app is on production
+if(process.env.NODE_ENV === "production"){
+    // set static folder
+    app.use(express.static("frontend/build"))
+
+    app.get("*",(req,res) => {
+        res.sendFile(path.resolve(__dirname,'frontend','build','index.html'))
+    })
+}
 
 app.listen(port, console.log(`App is running on port ${port}`))
