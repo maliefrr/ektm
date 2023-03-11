@@ -3,7 +3,7 @@ const bodyParser = require("body-parser")
 require("dotenv").config()
 const connectDB = require("./config/db.js")
 const multer = require("multer")
-const cors = require('cors');
+// const cors = require('cors');
 const path = require('path')
 const app = express()
 
@@ -42,13 +42,13 @@ app.use(express.urlencoded({
     extended: false
 }))
 app.use(bodyParser.json())
-app.use(cors({
-    origin: ['http://localhost:3000','https://64ce-182-1-202-230.ap.ngrok.io'],
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    exposedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true
-}));
+// app.use(cors({
+//     origin: ['http://localhost:3000'],
+//     methods: ['GET', 'POST', 'PUT', 'DELETE'],
+//     allowedHeaders: ['Content-Type', 'Authorization'],
+//     exposedHeaders: ['Content-Type', 'Authorization'],
+//     credentials: true
+// }));
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*'); // Replace with your React app's URL
@@ -64,14 +64,5 @@ app.use((req, res, next) => {
 app.use("/api/users/",require("./routes/userRoute.js"))
 app.use("/api/mahasiswa/",require("./routes/mahasiswaRoute"))
 
-// cek if the app is on production
-if(process.env.NODE_ENV === "production"){
-    // set static folder
-    app.use(express.static("frontend/build"))
-
-    app.get("*",(req,res) => {
-        res.sendFile(path.resolve(__dirname,'frontend','build','index.html'))
-    })
-}
 
 app.listen(port, console.log(`App is running on port ${port}`))
