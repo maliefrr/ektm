@@ -43,7 +43,7 @@ app.use(express.urlencoded({
 }))
 app.use(bodyParser.json())
 app.use(cors({
-    origin: ['ektmfrontend-frontend.up.railway.app','http://192.168.196.142:8080/'],
+    origin: ['https://ektmfrontend-frontend.up.railway.app','http://192.168.196.142:8080'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     exposedHeaders: ['Content-Type', 'Authorization'],
@@ -51,7 +51,7 @@ app.use(cors({
 }));
 
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'ektmfrontend-frontend.up.railway.app', 'http://192.168.196.142:8080/'); // Replace with your React app's URL
+  res.header('Access-Control-Allow-Origin', 'https://ektmfrontend-frontend.up.railway.app', 'http://192.168.196.142:8080'); // Replace with your React app's URL
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   res.header('Access-Control-Expose-Headers', 'Content-Type, Authorization');
