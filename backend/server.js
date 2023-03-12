@@ -49,7 +49,7 @@ app.use(cors({
     exposedHeaders: ['Content-Type', 'Authorization'],
     credentials: true
 }));
-
+// change the trail
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', 'https://ektmfrontend-frontend.up.railway.app', 'http://192.168.196.142:8080'); // Replace with your React app's URL
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
