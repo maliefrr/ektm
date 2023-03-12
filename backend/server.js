@@ -43,7 +43,7 @@ app.use(express.urlencoded({
 }))
 app.use(bodyParser.json())
 app.use(cors({
-    origin: ['ektmfrontend-frontend.up.railway.app'],
+    origin: ['*'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     exposedHeaders: ['Content-Type', 'Authorization'],
