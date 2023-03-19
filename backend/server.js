@@ -43,7 +43,7 @@ app.use(express.urlencoded({
 }))
 app.use(bodyParser.json())
 app.use(cors({
-    origin: ['https://ektmfrontend-frontend.up.railway.app','http://192.168.196.142:8080','http://localhost:3000','https://ektm.netlify.app'],
+    origin: ['https://ektmfrontend-frontend.up.railway.app','http://192.168.196.142:8080','http://localhost:3000','https://ektm.netlify.app','*'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     exposedHeaders: ['Content-Type', 'Authorization'],
