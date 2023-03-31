@@ -29,6 +29,14 @@ const mahasiswaSchema = mongoose.Schema({
     jenis_kelamin: {
         type: String,
         default: "-"
+    },
+    status: {
+        type: String,
+        required: true
+    },
+    angkatan: {
+        type: Number,
+        required: true
     }
 },{
     timestamps: true
