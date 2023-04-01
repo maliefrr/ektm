@@ -26,7 +26,9 @@ const getAllMahasiswa = asyncHandler(async (req,res) => {
                     alamat : user.alamat,
                     gol_darah : user.gol_darah,
                     pas_foto : user.pas_foto,
-                    jenis_kelamin : user.jenis_kelamin
+                    jenis_kelamin : user.jenis_kelamin,
+                    status: user.status,
+                    angkatan: user.angkatan
                 }
             })
         })
@@ -34,10 +36,8 @@ const getAllMahasiswa = asyncHandler(async (req,res) => {
 })
 
 const addMahasiswa = asyncHandler( async (req,res) => {
-    const {name,prodi,nim,alamat,gol_darah,jenis_kelamin} = req.body;
-    console.log(req.body)
-    console.log(req.file)
-    if(!name || !prodi || !nim || !alamat) {
+    const {name,prodi,nim,alamat,gol_darah,jenis_kelamin,status,angkatan} = req.body;
+    if(!name || !prodi || !nim || !alamat || !status || !angkatan ) {
         res.status(400).json({
             statusCode: 400,
             message: "The field cannot be blank"
@@ -51,7 +51,8 @@ const addMahasiswa = asyncHandler( async (req,res) => {
             const data = await mahasiswaModel.create({
                 name,prodi,alamat,pas_foto : imageUpload.image.url , nim,
                 gol_darah : gol_darah ? gol_darah : "-",
-                jenis_kelamin: jenis_kelamin ? jenis_kelamin : "-"
+                jenis_kelamin: jenis_kelamin ? jenis_kelamin : "-",
+                status,angkatan
             })
             data.save()
             const createdUser = await userModel.create({
@@ -71,7 +72,8 @@ const addMahasiswa = asyncHandler( async (req,res) => {
             const data = await mahasiswaModel.create({
                 name,prodi,alamat,pas_foto : imageUpload.image.url , nim,
                 gol_darah : gol_darah ? gol_darah : "-",
-                jenis_kelamin: jenis_kelamin ? jenis_kelamin : "-"
+                jenis_kelamin: jenis_kelamin ? jenis_kelamin : "-",
+                status,angkatan
             })
             data.save()
             const createdUser = await userModel.create({
@@ -115,9 +117,9 @@ const getMahasiswaDetail = asyncHandler(async (req,res) => {
 
 const editMahasiswa = asyncHandler(async (req,res) => {
     try {
-        const {name,prodi,nim,gol_darah,jenis_kelamin,alamat} = req.body
+        const {name,prodi,nim,gol_darah,jenis_kelamin,alamat,status,angkatan} = req.body
         const user = await mahasiswaModel.findOneAndUpdate({nim : req.params.username},{
-            name,prodi,nim,gol_darah,jenis_kelamin,alamat
+            name,prodi,nim,gol_darah,jenis_kelamin,alamat,status,angkatan
         })
         res.status(200).json({
             statusCode: 200,
