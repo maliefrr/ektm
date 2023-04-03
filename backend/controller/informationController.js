@@ -40,13 +40,11 @@ const addInformation = asyncHandler(async (req,res) => {
 
 const getInformationAll = asyncHandler(async (req,res) => {
     try {
-        const authorizeUser = req.user.id;
-        if(!authorizeUser){
-            res.status(401).json({
-                statusCode: 401,
-                message: "User not Authorized"
-            })
-        }        
+        const data = await informationModel.find()
+        res.status(200).json({
+            statusCode: 200,
+            data
+        })        
     } catch (error) {
         res.status(500).json({
             statusCode: 500,
