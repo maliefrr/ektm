@@ -2,7 +2,6 @@ const userModel = require("../models/userModel.js")
 const jwt = require("jsonwebtoken")
 const asyncHandler = require("express-async-handler")
 const bcrypt = require("bcryptjs")
-const { findOne } = require("../models/userModel.js")
 
 const getAllUser = asyncHandler( async (req,res) => {
     const authorizeUser = req.user.id;
