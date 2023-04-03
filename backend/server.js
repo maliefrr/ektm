@@ -61,8 +61,10 @@ app.use((req, res, next) => {
 
 
 // load route
-app.use("/api/users/",require("./routes/userRoute.js"))
+app.use("/api/users/",require("./routes/userRoute"))
 app.use("/api/mahasiswa/",require("./routes/mahasiswaRoute"))
+app.use("/api/announcement/",require("./routes/announcementRoute"))
+app.use("/api/information/",require("./routes/informationRoute"))
 
 
 app.listen(port, console.log(`App is running on port ${port}`))
