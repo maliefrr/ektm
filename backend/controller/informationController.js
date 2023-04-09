@@ -6,7 +6,7 @@ const {informationModel} = require("../models/informationModel.js")
 
 const scrapInformation = asyncHandler(async (req,res) => {
   try {
-    const browser = await puppeteer.launch();
+    const browser = puppeteer.launch({ args: ['--no-sandbox'] });
     const page = await browser.newPage();
     await page.goto('http://ilkom.fmipa.uho.ac.id/informasi-lainnya/');
 
@@ -69,9 +69,9 @@ const getInformationAll = asyncHandler(async (req,res) => {
     }
 })
 
-cron.schedule('0 * * * *',asyncHandler(async (req,res) => {
+cron.schedule('* * * * *',asyncHandler(async (req,res) => {
   try {
-    const browser = await puppeteer.launch();
+    const browser = puppeteer.launch({ args: ['--no-sandbox'] });
     const page = await browser.newPage();
     await page.goto('http://ilkom.fmipa.uho.ac.id/informasi-lainnya/');
 
