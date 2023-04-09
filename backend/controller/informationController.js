@@ -70,7 +70,7 @@ const getInformationAll = asyncHandler(async (req,res) => {
     }
 })
 
-cron.schedule('* * * * *',asyncHandler(async (req,res) => {
+cron.schedule('0 * * * *',asyncHandler(async (req,res) => {
   try {
     const browser = await puppeteer.launch({ args: ['--no-sandbox'] });
     const page = await browser.newPage();
