@@ -6,7 +6,7 @@ const {informationModel} = require("../models/informationModel.js")
 
 const scrapInformation = asyncHandler(async (req,res) => {
   try {
-    const browser = puppeteer.launch({ args: ['--no-sandbox'] });
+    const browser = await puppeteer.launch({ args: ['--no-sandbox'] });
     const page = await browser.newPage();
     await page.goto('http://ilkom.fmipa.uho.ac.id/informasi-lainnya/');
 
@@ -52,6 +52,7 @@ const scrapInformation = asyncHandler(async (req,res) => {
   }
 });
 
+
   
 
 const getInformationAll = asyncHandler(async (req,res) => {
@@ -71,7 +72,7 @@ const getInformationAll = asyncHandler(async (req,res) => {
 
 cron.schedule('* * * * *',asyncHandler(async (req,res) => {
   try {
-    const browser = puppeteer.launch({ args: ['--no-sandbox'] });
+    const browser = await puppeteer.launch({ args: ['--no-sandbox'] });
     const page = await browser.newPage();
     await page.goto('http://ilkom.fmipa.uho.ac.id/informasi-lainnya/');
 
@@ -104,7 +105,7 @@ cron.schedule('* * * * *',asyncHandler(async (req,res) => {
       }
     }
 
-    console.log(`Added ${newDataCount} new Information.`)
+    console.log(`Added ${newDataCount} new information.`)
   } catch (error) {
     console.log(error)
   }
