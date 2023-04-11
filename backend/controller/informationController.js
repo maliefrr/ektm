@@ -33,7 +33,7 @@ const scrapInformation = asyncHandler(async (req,res) => {
     for (const newData of data) {
       const existingData = await informationModel.findOne({ title: newData.title });
       if (!existingData) {
-        await informationModel.create(newData);
+        await informationModel.create();
         newDataCount++;
         newDataArr.push(newData)
       }

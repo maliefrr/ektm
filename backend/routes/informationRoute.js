@@ -1,5 +1,5 @@
 const router = require("express").Router()
-const {getInformationAll, addInformation, scrapInformation} = require("../controller/informationController")
+const {getInformationAll,scrapInformation} = require("../controller/informationController")
 
 router.get("/all",getInformationAll)
 router.get("/get",scrapInformation)

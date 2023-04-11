@@ -5,12 +5,8 @@ const announcementSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    picture: {
-        type: String,
-    },
-    content: {
-        type: String,
-        required: true
+    schedule: {
+        type: Date,
     },
     source: {
         type: String

@@ -5,9 +5,6 @@ const informationSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    picture: {
-        type: String,
-    },
     content: {
         type: String,
         required: true

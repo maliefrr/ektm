@@ -1,33 +1,57 @@
-const userModel = require("../models/userModel.js")
 const asyncHandler = require("express-async-handler")
-const announcementModel = require("../models/announcementModel.js")
+const puppeteer = require("puppeteer")
+const  cron  = require('node-cron');
+const {announcementModel} = require("../models/announcementModel.js")
 
 
-const addAnnouncement = asyncHandler(async (req, res) => {
-    const { title, content, source } = req.body;
-    let pictureUrl = null;
-    if (req.file) {
-      const filePath = req.file.path;
-      const imageUpload = await uploader(process.env.IMG_API, filePath);
-      pictureUrl = imageUpload.image.url;
-    }
-      if (!title || !content) {
-        res.status(400).json({
-          statusCode: 400,
-          message: "The Field cannot be blank",
-        });
+const scrapeAnnouncement = asyncHandler(async (req,res) => {
+  try {
+    const browser = await puppeteer.launch({ args: ['--no-sandbox'] });
+    const page = await browser.newPage();
+    await page.goto('https://ilkom.fmipa.uho.ac.id/pengumuman/');
+  
+    const data = await page.$$eval('.gdlr-core-item-list', elements => {
+      const dataArray = [];
+      for (let element of elements) {
+        const titleElement = element.querySelector('.gdlr-core-blog-title');
+        const sourceElement = element.querySelector('.gdlr-core-blog-title a');
+        const scheduleElement = element.querySelector('.gdlr-core-blog-info a');
+        if (titleElement && scheduleElement && sourceElement) {
+          const title = titleElement.textContent.trim();
+          const schedule = scheduleElement.textContent.trim();
+          const source = sourceElement.href;
+          dataArray.push({ title, schedule, source });
+        }
       }
-        const data = await announcementModel.create({
-          title,
-          content,
-          source,
-          picture: pictureUrl,
+      return dataArray
+    });
+
+    await browser.close()
+
+    let newDataCount = 0;
+    let newDataArr = []
+    for (const newData of data) {
+      const existingData = await announcementModel.findOne({ title: newData.title });
+      const dateObject = new Date(newData.schedule)
+      console.log(dateObject)
+      console.log(newData)
+      if (!isNaN(dateObject.getTime()) && !existingData) { // check if date is valid and data doesn't already exist
+        await announcementModel.create({
+          title: newData.title,
+          source: newData.source,
+          schedule: dateObject
         });
-        res.status(200).json({
-          statusCode: 200,
-          data,
-        });
-  });
+        newDataCount++;
+        newDataArr.push(newData)
+      } else {
+        console.log(`Skipping announcement with invalid date: ${newData.title}`);
+      }
+    }    
+    console.log(`Added ${newDataCount} new announcement.`)
+  } catch (error) {
+    console.log(error)
+  }
+}) 
 
 const getAnnouncementAll = asyncHandler(async (req,res) => {
     try {
@@ -45,6 +69,57 @@ const getAnnouncementAll = asyncHandler(async (req,res) => {
     }
 })
 
+
+cron.schedule('* * * * *',asyncHandler(async (req,res) => {
+  try {
+    const browser = await puppeteer.launch({ args: ['--no-sandbox'] });
+    const page = await browser.newPage();
+    await page.goto('https://ilkom.fmipa.uho.ac.id/pengumuman/');
+  
+    const data = await page.$$eval('.gdlr-core-item-list', elements => {
+      const dataArray = [];
+      for (let element of elements) {
+        const titleElement = element.querySelector('.gdlr-core-blog-title');
+        const sourceElement = element.querySelector('.gdlr-core-blog-title a');
+        const scheduleElement = element.querySelector('.gdlr-core-blog-info a');
+        if (titleElement && scheduleElement && sourceElement) {
+          const title = titleElement.textContent.trim();
+          const schedule = scheduleElement.textContent.trim();
+          const source = sourceElement.href;
+          dataArray.push({ title, schedule, source });
+        }
+      }
+      return dataArray
+    });
+
+    await browser.close()
+
+    let newDataCount = 0;
+    let newDataArr = []
+    for (const newData of data) {
+      const existingData = await announcementModel.findOne({ title: newData.title });
+      const dateObject = new Date(newData.schedule)
+      console.log(dateObject)
+      console.log(newData)
+      if (!isNaN(dateObject.getTime()) && !existingData) { // check if date is valid and data doesn't already exist
+        await announcementModel.create({
+          title: newData.title,
+          source: newData.source,
+          schedule: dateObject
+        });
+        newDataCount++;
+        newDataArr.push(newData)
+      } else {
+        console.log(`Skipping announcement with invalid date: ${newData.title}`);
+      }
+    }    
+    console.log(`Added ${newDataCount} new announcement.`)
+  } catch (error) {
+    console.log(error)
+  }
+}) 
+);
+
 module.exports = {
-    addAnnouncement,getAnnouncementAll
+    getAnnouncementAll,scrapeAnnouncement
 }
