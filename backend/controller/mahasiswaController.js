@@ -45,11 +45,9 @@ const addMahasiswa = asyncHandler( async (req,res) => {
     }
     else {
         const salt = await bcrypt.genSalt(10);
-        const filePath = req.file.path
-        const imageUpload = await uploader(process.env.IMG_API, filePath)
-        if(!filePath){
+        if(!req.file || !req.file.path){
             const data = await mahasiswaModel.create({
-                name,prodi,alamat,pas_foto : imageUpload.image.url , nim,
+                name,prodi,alamat,pas_foto : "https://i.ibb.co/nrpmPBn/d4b6e87392d6.png" , nim,
                 gol_darah : gol_darah ? gol_darah : "-",
                 jenis_kelamin: jenis_kelamin ? jenis_kelamin : "-",
                 status,angkatan
@@ -69,6 +67,8 @@ const addMahasiswa = asyncHandler( async (req,res) => {
                 data
             })
         } else {
+            const filePath = req.file.path
+            const imageUpload = await uploader(process.env.IMG_API, filePath)
             const data = await mahasiswaModel.create({
                 name,prodi,alamat,pas_foto : imageUpload.image.url , nim,
                 gol_darah : gol_darah ? gol_darah : "-",
