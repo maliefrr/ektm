@@ -38,8 +38,8 @@ const register = asyncHandler( async (req,res) => {
     } else {
         const user = await userModel.findOne({username});
         if(user){
-            res.status(400).json({
-                statusCode:400,
+            res.status(409).json({
+                statusCode:409,
                 message: "Username has been already exist"
             })
         } else {
@@ -120,7 +120,7 @@ const getUser = asyncHandler(async (req,res) => {
 })
 
 const deleteUser = async (req,res) => {
-    const data = await userModel.findByIdAndDelete(req.params.id);
+    const data = await userModel.findOneAndDelete({username : req.params.id});
     res.status(200).json({
         data: {
             user: data.username,

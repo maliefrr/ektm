@@ -115,25 +115,66 @@ const getMahasiswaDetail = asyncHandler(async (req,res) => {
     }
 })
 
-const editMahasiswa = asyncHandler(async (req,res) => {
+const editMahasiswa = asyncHandler(async (req, res) => {
     try {
-        const {name,prodi,nim,gol_darah,jenis_kelamin,alamat,status,angkatan} = req.body
-        const user = await mahasiswaModel.findOneAndUpdate({nim : req.params.username},{
-            name,prodi,nim,gol_darah,jenis_kelamin,alamat,status,angkatan
-        })
-        res.status(200).json({
-            statusCode: 200,
-            message: "The data has been successfully updated",
-            data: user
-        })
+      const { name, prodi, nim, gol_darah, jenis_kelamin, alamat, status, angkatan } = req.body;
+      const user = await mahasiswaModel.findOneAndUpdate(
+        { nim: req.params.username },
+        {
+          name,
+          prodi,
+          nim,
+          gol_darah,
+          jenis_kelamin,
+          alamat,
+          status,
+          angkatan,
+        },
+        { new: true }
+      );
+  
+      if (!user) {
+        return res.status(404).json({
+          statusCode: 404,
+          message: "Mahasiswa Not Found",
+        });
+      }
+  
+      res.status(200).json({
+        statusCode: 200,
+        message: "The data has been successfully updated",
+        data: user,
+      });
     } catch (error) {
-        res.status(500).json({
-            statusCode: 500,
-            message: "Internal Server Error"
+      res.status(500).json({
+        statusCode: 500,
+        message: "Internal Server Error",
+      });
+    }
+  });
+  
+
+  const deleteMahasiswa = async (req,res) => {
+    const data = await mahasiswaModel.findOneAndDelete({nim : req.params.nim})
+    const user = await userModel.findOneAndDelete({username : req.params.nim})
+    if (!data) {
+        res.status(404).json({
+            statusCode : 404,
+            message: "Mahasiswa not found"
+        })
+    } else {
+        res.status(200).json({
+            statusCode : 200,
+            message: "Mahasiswa has been successfully deleted",
+            data: {
+                nama: data.name,
+                nim: data.nim
+            }
         })
     }
-})
+}
+
 
 module.exports = {
-    addMahasiswa, getAllMahasiswa, getMahasiswaDetail,editMahasiswa
+    addMahasiswa, getAllMahasiswa, getMahasiswaDetail,editMahasiswa, deleteMahasiswa
 }
