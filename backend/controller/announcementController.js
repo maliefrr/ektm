@@ -4,7 +4,7 @@ const  cron  = require('node-cron');
 const {announcementModel} = require("../models/announcementModel.js")
 
 
-const scrapeAnnouncement = asyncHandler(async (req,res) => {
+const scrapeAnnouncement = asyncHandler(async () => {
   try {
     const browser = await puppeteer.launch({ args: ['--no-sandbox'] });
     const page = await browser.newPage();
@@ -70,7 +70,7 @@ const getAnnouncementAll = asyncHandler(async (req,res) => {
 })
 
 
-cron.schedule('0 9 * * *',asyncHandler(async (req,res) => {
+cron.schedule('0 9 * * *',asyncHandler(async () => {
   try {
     const browser = await puppeteer.launch({ args: ['--no-sandbox'] });
     const page = await browser.newPage();

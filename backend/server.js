@@ -4,7 +4,6 @@ require("dotenv").config()
 const connectDB = require("./config/db.js")
 const multer = require("multer")
 const cors = require('cors');
-const path = require('path')
 const app = express()
 
 connectDB()

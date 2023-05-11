@@ -115,7 +115,10 @@ const getUser = asyncHandler(async (req,res) => {
             }
         })
     } catch (error) {
-        
+        res.status(500).json({
+            statusCode : 500,
+            message: "Internal Server Error"
+        })
     }
 })
 

@@ -154,25 +154,24 @@ const editMahasiswa = asyncHandler(async (req, res) => {
   });
   
 
-  const deleteMahasiswa = async (req,res) => {
-    const data = await mahasiswaModel.findOneAndDelete({nim : req.params.nim})
-    const user = await userModel.findOneAndDelete({username : req.params.nim})
-    if (!data) {
-        res.status(404).json({
-            statusCode : 404,
-            message: "Mahasiswa not found"
-        })
-    } else {
-        res.status(200).json({
-            statusCode : 200,
-            message: "Mahasiswa has been successfully deleted",
-            data: {
-                nama: data.name,
-                nim: data.nim
-            }
-        })
-    }
-}
+const deleteMahasiswa = async (req, res) => {
+  const nim = req.params.nim;
+  if (!nim) {
+    return res.status(400).json({ message: 'NIM is required' });
+  }
+
+  const data = await mahasiswaModel.findOneAndDelete({ nim: nim });
+  await userModel.findOneAndDelete({ username: nim });
+  if (!data) {
+    return res.status(404).json({ message: 'Mahasiswa data not found' });
+  }
+
+  return res.status(200).json({ message: 'Mahasiswa data deleted successfully' });
+};
+
+module.exports = {
+  deleteMahasiswa,
+};
 
 
 module.exports = {
