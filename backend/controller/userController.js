@@ -2,6 +2,7 @@ const userModel = require("../models/userModel.js")
 const jwt = require("jsonwebtoken")
 const asyncHandler = require("express-async-handler")
 const bcrypt = require("bcryptjs")
+const e = require("express")
 
 const getAllUser = asyncHandler( async (req,res) => {
     const authorizeUser = req.user.id;
@@ -68,13 +69,20 @@ const editProfileUser = asyncHandler(async (req,res) => {
         const data = await userModel.findOneAndUpdate({username : req.params.username},{
             email
         })
-        res.status(200).json({
-            statusCode: 200,
-            message: "The data has been successfully updated",
-            data: {
-                email: data.email
-            }
-        })
+        if(!data){
+            res.status(404).json({
+                statusCode: 404,
+                message: "User does not exist"
+            })
+        } else {
+            res.status(200).json({
+                statusCode: 200,
+                message: "The data has been successfully updated",
+                data: {
+                    email: data.email
+                }
+            })
+        }
     } catch (error) {
         res.status(500).json({
             statusCode: 500,
@@ -87,13 +95,20 @@ const editPassword = asyncHandler(async (req,res) => {
     try {
         const salt = await bcrypt.genSalt(10)
         const password = await bcrypt.hash(req.body.password,salt)
-        await userModel.findOneAndUpdate({username: req.params.username},{
+        const user = await userModel.findOneAndUpdate({username: req.params.username},{
             password
         })
-        res.status(200).json({
-            statusCode: 200,
-            message: "Password has been successfully updated"
-        })
+        if(!user) {
+            res.status(404).json({
+                statusCode: 404,
+                message: "User not found"
+            })
+        } else {
+            res.status(200).json({
+                statusCode: 200,
+                message: "Password has been successfully updated"
+            })
+        }
     } catch (error) {
         res.json({
             message: error
@@ -124,6 +139,12 @@ const getUser = asyncHandler(async (req,res) => {
 
 const deleteUser = async (req,res) => {
     const data = await userModel.findOneAndDelete({username : req.params.id});
+    if(!data) {
+        res.status(404).json({
+            statusCode: 404,
+            message: "User doesn't exist"
+        })
+    }
     res.status(200).json({
         data: {
             user: data.username,

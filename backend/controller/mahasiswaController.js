@@ -8,7 +8,7 @@ const userModel = require("../models/userModel");
 const getAllMahasiswa = asyncHandler(async (req,res) => {
     const authorizeUser = req.user.id;
     const user = await userModel.findById(authorizeUser)
-    if(authorizeUser && user.role !== "admin") {
+    if(!authorizeUser || authorizeUser && user.role !== "admin") {
         res.status(401).json({
             statusCode: 401,
             message: "User not authorized"
@@ -167,10 +167,6 @@ const deleteMahasiswa = async (req, res) => {
   }
 
   return res.status(200).json({ message: 'Mahasiswa data deleted successfully' });
-};
-
-module.exports = {
-  deleteMahasiswa,
 };
 
 
